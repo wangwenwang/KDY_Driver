@@ -11,13 +11,13 @@ import Foundation
 struct URLConstants {
     
     /// 服务器地址
-    static let baseUrl: String = "http://oms.kaidongyuan.com:8088/api/"
+    static let baseUrl: String = "http://119.29.148.189:8888/api/"
     
     /// app 唯一标识符
-    static let appId: String = "1138169586"
+    static let appId: String = "1279614793"
     
     /// 文件下载端口和文件夹
-    static let loadUrl: String = "http://oms.kaidongyuan.com:8088/"
+    static let loadUrl: String = "http://119.29.148.189:8888/"
     
     /// 服务端存放电子签名和现场图片的文件夹
     static let serverAutographAndPictureFile: String = "Uploadfile"
@@ -25,7 +25,7 @@ struct URLConstants {
     /// 登陆接口
     static let loginUrl: String = URLConstants.baseUrl + "Login"
     
-    /// 获取未交付订单接口 带时间
+    /// 获取未交付订单列表接口 带时间
     static let API_GetDriverDateOrderClientList: String = URLConstants.baseUrl + "GetDriverDateOrderClientList"
     
     /// 修改登录密码

@@ -521,6 +521,7 @@
 				3074A0E31DF7B3B6008DC76F /* NotificationSimpleTableViewCell.swift */,
 				3074A0E41DF7B3B6008DC76F /* NotificationSimpleTableViewCell.xib */,
 				302B0F081E02386500AC2FEC /* PushOrderTableViewCell.swift */,
+				302B0F091E02386500AC2FEC /* PushOrderTableViewCell.xib */,
 				3074A0E51DF7B3B6008DC76F /* NotPayOrderTableViewCell.swift */,
 				3074A0E61DF7B3B6008DC76F /* NotPayOrderTableViewCell.xib */,
 				3074A0E91DF7B3B6008DC76F /* PayedOrderTableViewCell.swift */,
@@ -529,7 +530,6 @@
 				3074A0DE1DF7B3B6008DC76F /* AllOrderTableViewCell.xib */,
 				3074A0E71DF7B3B6008DC76F /* OrderDetailsTableViewCell.swift */,
 				3074A0E81DF7B3B6008DC76F /* OrderDetailsTableViewCell.xib */,
-				302B0F091E02386500AC2FEC /* PushOrderTableViewCell.xib */,
 				300FB28B1E825FF3009E13F5 /* OrderBillingTableViewCell.swift */,
 				300FB28C1E825FF3009E13F5 /* OrderBillingTableViewCell.xib */,
 				300FB28F1E826008009E13F5 /* OtherBillingTableViewCell.swift */,
@@ -1145,7 +1145,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D DEBUG";
 				PODS_ROOT = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kaidongyuan.driver;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kaidongyuan.TYDriver;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "newDriver/newDriver-Bridging-Header.h";
@@ -1218,7 +1218,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PODS_ROOT = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kaidongyuan.driver;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kaidongyuan.TYDriver;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "newDriver/newDriver-Bridging-Header.h";

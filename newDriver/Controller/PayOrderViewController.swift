@@ -247,7 +247,7 @@ class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePick
             image = info[UIImagePickerControllerOriginalImage] as? UIImage
         }
         if let im = image {
-            let data = image?.compressImage(im, maxLength: 1024*100)
+            let data = image?.compressImage(im, maxLength: 568*32, maxWidthOrHeight: 568*2)
             if let da = data {
                 image = UIImage(data: da)
             }

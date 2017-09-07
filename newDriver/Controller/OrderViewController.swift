@@ -41,9 +41,10 @@ class OrderViewController: UIViewController {
         controllerArray.append(allOrderController)
         
         let parameters: [CAPSPageMenuOption] = [
+            .selectedMenuItemLabelColor(AppDelegate.TYColor),
             .scrollMenuBackgroundColor(UIColor.init(colorLiteralRed: 0.97, green: 0.97, blue: 0.97, alpha: 1)),
             .viewBackgroundColor(UIColor.init(colorLiteralRed: 0.97, green: 0.97, blue: 0.97, alpha: 1)),
-            .selectionIndicatorColor(UIColor.orange),
+            .selectionIndicatorColor(AppDelegate.TYColor),
             .bottomMenuHairlineColor(UIColor.init(colorLiteralRed: 0.97, green: 0.97, blue: 0.97, alpha: 1)),
             .menuItemFont(UIFont(name: "HelveticaNeue", size: 13.0)!),
             .menuHeight(35.0),

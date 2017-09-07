@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CheckAutographAndPictureViewController" customModule="newDriver" customModuleProvider="target">
@@ -18,33 +19,25 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1kH-QR-P9e">
-                    <rect key="frame" x="8" y="75" width="584" height="517"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f63-0s-M0I">
-                            <rect key="frame" x="8" y="8" width="568" height="164"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="客户签名：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ec9-7D-CdN">
-                                    <rect key="frame" x="8" y="8" width="65" height="16"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="ic_imageview_default_bg" translatesAutoresizingMaskIntoConstraints="NO" id="W5R-Vh-90W">
-                                    <rect key="frame" x="20" y="32" width="528" height="124"/>
-                                </imageView>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="ic_imageview_default_bg" translatesAutoresizingMaskIntoConstraints="NO" id="W5R-Vh-90W"/>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F1R-ii-D3E">
-                                    <rect key="frame" x="20" y="32" width="528" height="124"/>
                                     <connections>
                                         <action selector="checkAutographDetail:" destination="-1" eventType="touchUpInside" id="FAW-Zt-qDc"/>
                                     </connections>
                                 </button>
-                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="VqZ-n4-3mo">
-                                    <rect key="frame" x="274" y="84" width="20" height="20"/>
-                                </activityIndicatorView>
+                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="VqZ-n4-3mo"/>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="W5R-Vh-90W" firstAttribute="leading" secondItem="f63-0s-M0I" secondAttribute="leading" constant="20" id="98U-Hu-uiK"/>
@@ -62,26 +55,19 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NmD-0N-Ous">
-                            <rect key="frame" x="8" y="180" width="568" height="165"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="交货现场1：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yjv-o6-8oU">
-                                    <rect key="frame" x="8" y="8" width="71" height="16"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="ic_imageview_default_bg" translatesAutoresizingMaskIntoConstraints="NO" id="3Ye-Pe-CdS">
-                                    <rect key="frame" x="20" y="32" width="528" height="125"/>
-                                </imageView>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="ic_imageview_default_bg" translatesAutoresizingMaskIntoConstraints="NO" id="3Ye-Pe-CdS"/>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="97I-vi-qnh">
-                                    <rect key="frame" x="20" y="32" width="528" height="125"/>
                                     <connections>
                                         <action selector="checkPicture1Detail:" destination="-1" eventType="touchUpInside" id="cXC-XJ-1Is"/>
                                     </connections>
                                 </button>
-                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hWr-Eh-WQO">
-                                    <rect key="frame" x="274" y="85" width="20" height="20"/>
-                                </activityIndicatorView>
+                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hWr-Eh-WQO"/>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="Yjv-o6-8oU" firstAttribute="leading" secondItem="NmD-0N-Ous" secondAttribute="leading" constant="8" id="2ro-Or-OWF"/>
@@ -99,22 +85,15 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0vf-wc-9xL">
-                            <rect key="frame" x="8" y="353" width="568" height="164"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="交货现场2：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wO7-Le-mGG">
-                                    <rect key="frame" x="8" y="8" width="73" height="16"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="ic_imageview_default_bg" translatesAutoresizingMaskIntoConstraints="NO" id="gQb-ac-BJh">
-                                    <rect key="frame" x="20" y="32" width="528" height="124"/>
-                                </imageView>
-                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hmZ-bB-oop">
-                                    <rect key="frame" x="274" y="84" width="20" height="20"/>
-                                </activityIndicatorView>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="ic_imageview_default_bg" translatesAutoresizingMaskIntoConstraints="NO" id="gQb-ac-BJh"/>
+                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hmZ-bB-oop"/>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OtN-AC-cDe">
-                                    <rect key="frame" x="20" y="32" width="528" height="124"/>
                                     <connections>
                                         <action selector="checkPicture2Detail:" destination="-1" eventType="touchUpInside" id="DOp-uo-sZX"/>
                                     </connections>
@@ -154,7 +133,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="1kH-QR-P9e" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="75" id="4xL-fr-e6P"/>
                 <constraint firstAttribute="bottom" secondItem="1kH-QR-P9e" secondAttribute="bottom" constant="8" id="cqf-zN-MpW"/>

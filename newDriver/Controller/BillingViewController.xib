@@ -430,7 +430,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.27489084833238164" green="0.68982136456392584" blue="0.81653922872340423" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" red="0.27013062170000002" green="0.65527860449999997" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="z4K-Pr-gDB" secondAttribute="trailing" id="54w-kM-ofD"/>
                                                 <constraint firstAttribute="height" constant="37" id="FlZ-Q3-fs4"/>

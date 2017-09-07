@@ -31,6 +31,8 @@ class CheckAutographAndPictureBiz {
             "strLicense": ""
         ]
         
+        print(parameters)
+        
         weak var weakSelf = self
         NetWorkBaseBiz().postWithPath(path: URLConstants.getAutographAndPicture, paras: parameters, success: { (result) in
             DispatchQueue.main.async {

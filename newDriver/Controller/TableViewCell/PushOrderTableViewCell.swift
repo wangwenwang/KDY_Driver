@@ -11,7 +11,11 @@ import UIKit
 class PushOrderTableViewCell: UITableViewCell {
     
     
-    @IBOutlet weak var titleLabel: UILabel!
+    /// 订单编号
+    @IBOutlet weak var ORD_NO: UILabel!
+    
+    /// 客户单号
+    @IBOutlet weak var ORD_NO_CLIENT: UILabel!
     
     
     override func awakeFromNib() {

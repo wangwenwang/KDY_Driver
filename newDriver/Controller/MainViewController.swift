@@ -104,10 +104,6 @@ class MainViewController: UIViewController, HttpResponseProtocol, BMKMapViewDele
         
         super.viewDidLoad()
         
-        self.tabBarController?.tabBar.tintColor = UIColor.orange
-        
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.orange]
-        
         MainViewController.natigationBarHeight = self.navigationController?.navigationBar.frame.height
         MainViewController.natigationBarWidth = self.navigationController?.navigationBar.frame.width
         
@@ -176,7 +172,7 @@ class MainViewController: UIViewController, HttpResponseProtocol, BMKMapViewDele
     fileprivate func addCycleView () {
         self.cyclePictureViewContoner.layoutIfNeeded()
         let f = CGRect(x: 0, y: 0, width: self.view.frame.width + 5, height: cyclePictureViewContoner.bounds.height)
-        let cyclePictureView = CyclePictureView(frame: f, imageURLArray: ["ad_pic_1", "ad_pic_2", "ad_pic_3"])
+        let cyclePictureView = CyclePictureView(frame: f, imageURLArray: ["ad_pic_0","ad_pic_1", "ad_pic_2", "ad_pic_3"])
         cyclePictureView.timeInterval = 5.0
         cyclePictureViewContoner.addSubview(cyclePictureView)
     }
@@ -368,7 +364,7 @@ class MainViewController: UIViewController, HttpResponseProtocol, BMKMapViewDele
             cell.titleLabel.text = pushOrder.SHIPMENTNO
             cell.dateLabel.text = cutDate(longDate: pushOrder.ADD_DATE)
             cell.typeTitleLabel.text = "装运编号"
-            cell.typeIcon.image = UIImage.init(named: "ic_order_notification")
+            cell.typeIcon.image = UIImage.init(named: "ic_msg_notification")
             cell.badge.image = (pushOrder.ISREAD == "0") ? UIImage.init(named: "badge") : nil
             return cell
         } else if(pushOrder.TYPE == "1") {
@@ -377,7 +373,7 @@ class MainViewController: UIViewController, HttpResponseProtocol, BMKMapViewDele
             cell.titleLabel.text = pushOrder.TITLE
             cell.dateLabel.text = pushOrder.ADD_DATE
             cell.typeTitleLabel.text = "公告"
-            cell.typeIcon.image = UIImage.init(named: "ic_msg_notification")
+            cell.typeIcon.image = UIImage.init(named: "ic_order_notification")
             cell.badge.image = (pushOrder.ISREAD == "0") ? UIImage.init(named: "badge") : nil
             return cell
         }

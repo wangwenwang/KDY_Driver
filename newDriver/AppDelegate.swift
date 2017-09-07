@@ -12,9 +12,9 @@ import UserNotifications
 
 
 
-let kGtAppId:String = "RlESMA5Ett6NGG6d4zUd89"
-let kGtAppKey:String = "WooWKdiIMX6zDUNRmTPus8"
-let kGtAppSecret:String = "kzKvvT545pArwARCJqrfz3"
+let kGtAppId:String = "JYUaOhXe788SYPnicFy7i"
+let kGtAppKey:String = "8v0FQopYNT8oWmdofIPAx6"
+let kGtAppSecret:String = "922VP0bBym81XOxutQzVp1"
 
 
 
@@ -34,6 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BMKGeneralDelegate, GeTui
     static var token : String! = ""
     
     var window: UIWindow?
+    
+    static let TYColor: UIColor = UIColor.init(red: 48 / 255.0, green: 158 / 255.0, blue: 255 / 255.0, alpha: 1.0)
     
     /// 百度地图初始化用
     var baiduMapManager: BMKMapManager?
@@ -55,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BMKGeneralDelegate, GeTui
         
         //百度地图设置
         baiduMapManager = BMKMapManager()
-        let ret = baiduMapManager?.start("PaUI5RGE6a0T4G3mWvY1Upo162mcXHXd", generalDelegate: self)
+        let ret = baiduMapManager?.start("DKEddQWb471tGYaMMeLCqDXF2CBkqLmP", generalDelegate: self)
         if ret == false {
             NSLog("百度地图加载失败！")
         }
@@ -73,8 +75,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BMKGeneralDelegate, GeTui
         self.registerRemoteNotification()
         
         
-        //去掉返回按钮得字
+        // 去掉返回按钮得字
         UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -60), for: .default)
+        
+//        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 28),NSForegroundColorAttributeName: LM_blue]
+        
+        // 全局nav文字颜色
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:AppDelegate.TYColor]
         
         
         return true

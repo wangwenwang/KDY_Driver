@@ -13,7 +13,7 @@ import ObjectMapper
 class LoginBiz {
     
     /// 上传位置点时间间隔，默认为5分钟，后台返回的type动态更改上传时间间隔
-    var updataLocationSpanTimeMin: Double = 0.1
+    var updataLocationSpanTimeMin: Double = 9
     
     /// 是否需要更改上传时间间隔
     var isNeedChangeUpdataLocationSpanTime: Bool = false
@@ -126,16 +126,16 @@ class LoginBiz {
      *
      * location: 位置信息 CLLocationCoordinate2D
      */
-    func updataLocation (_ location: CLLocationCoordinate2D) {
+    func updataLocation (_ location: CLLocationCoordinate2D, _ address: String) {
         let localLocationPointList = getLocalLocationPointList()
         print("本地保存的位置点数据数量：\(localLocationPointList.count)")
         if localLocationPointList.count > 0 {//本地有缓存数据，先保存到本地在上传
             print("本地有缓存数据，先保存到本地在上传")
-            saveLocationPointInLocal(location)
+            saveLocationPointInLocal(location, address)
             updataCacheLocations()
         } else {//本地无保存位置点信息，直接上传
             print("本地无保存位置点信息，直接上传")
-            updataOneLocation(location)
+            updataOneLocation(location, address)
         }
     }
     
@@ -161,9 +161,9 @@ class LoginBiz {
      *
      * location: 位置信息 CLLocationCoordinate2D
      */
-    internal func saveLocationPointInLocal (_ location: CLLocationCoordinate2D) {
+    internal func saveLocationPointInLocal (_ location: CLLocationCoordinate2D, _ address: String) {
         print("保存位置点信息到本地")
-        let locationContineTime = changeCLLocationCoordinated2DToLocationContineTime(location)
+        let locationContineTime = changeCLLocationCoordinated2DToLocationContineTime(location, address)
         
         var locationContineTimeList = getLocalLocationPointList()
         locationContineTimeList.append(locationContineTime)
@@ -202,12 +202,12 @@ class LoginBiz {
      *
      * return LocationContineTime
      */
-    fileprivate func changeCLLocationCoordinated2DToLocationContineTime (_ location: CLLocationCoordinate2D) -> LocationContineTime {
+    fileprivate func changeCLLocationCoordinated2DToLocationContineTime (_ location: CLLocationCoordinate2D, _ address: String) -> LocationContineTime {
         print("将百度地图的位置点信息转换成本地的 LocationContineTime")
         let locationContineTime = LocationContineTime()
         locationContineTime.ID = "\(getLocalLocationPointList().count)"
         locationContineTime.USERIDX = (AppDelegate.user?.IDX)!
-        locationContineTime.ADDRESS = "默认code地址"
+        locationContineTime.ADDRESS = address
         locationContineTime.CORDINATEX = location.longitude
         locationContineTime.CORDINATEY = location.latitude
         locationContineTime.TIME = DateUtils.getCurrentDate()
@@ -268,13 +268,13 @@ class LoginBiz {
      *
      * location: 需要上传的点
      */
-    fileprivate func updataOneLocation (_ location: CLLocationCoordinate2D) {
+    fileprivate func updataOneLocation (_ location: CLLocationCoordinate2D, _ address: String) {
         print("上传单个位置点")
         let parameters = [
             "strUserIdx": "\((AppDelegate.user?.IDX)!)",
             "cordinateX": "\(location.longitude)",
             "cordinateY": "\(location.latitude)",
-            "address": "默认code地址",
+            "address": address,
             "date": DateUtils.getCurrentDate()+"",
             "strLicense": ""
         ]
@@ -300,7 +300,7 @@ class LoginBiz {
                                 wkSelf.isNeedChangeUpdataLocationSpanTime = true
                             }
                         } else if type < 1 {//发送失败
-                            wkSelf.saveLocationPointInLocal(location)
+                            wkSelf.saveLocationPointInLocal(location, address)
                         }
                     }
                 }
@@ -308,7 +308,7 @@ class LoginBiz {
         }) { (error) in
             DispatchQueue.main.async {
                 if let wkSelf = weakSelf {
-                    wkSelf.saveLocationPointInLocal(location)
+                    wkSelf.saveLocationPointInLocal(location, address)
                 }
                 print(error)
             }

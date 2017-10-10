@@ -9,7 +9,7 @@
 import UIKit
 import MobileCoreServices
 
-class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, HttpResponseProtocol, UIActionSheetDelegate {
+class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, HttpResponseProtocol, UIActionSheetDelegate, BMKGeoCodeSearchDelegate {
     
     var pickerController : UIImagePickerController? = nil;
     
@@ -272,35 +272,70 @@ class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePick
     // MARK: - 交订单回调
     /// 提交订单成功回调
     func responseSuccess() {
-        let vcl = navigationController?.viewControllers[0]
-        NotPayTableViewController.shouldRefresh = true
         
-        let hud: MBProgressHUD = MBProgressHUD.showHUDAddedTo(self.navigationController!.view, animated: true)
+        let reverseGeocodeSearchOption = BMKReverseGeoCodeOption()
+        let geocodeSearch: BMKGeoCodeSearch = BMKGeoCodeSearch()
+        geocodeSearch.delegate = self
         
-        // Configure for text only and offset down
-        hud.mode = .text
-        hud.labelText = "提交订单成功，即将返回..."
-        hud.margin = 10.0
-        hud.removeFromSuperViewOnHide = true
-        hud.hide(true, afterDelay: 2)
-        
-        //判断连接状态
-        let reachability = Reachability.forInternetConnection()
-        
-        if reachability!.isReachable(){
-            locationBiz.updataLocation(AppDelegate.location)
-        }else{
-            locationBiz.saveLocationPointInLocal(AppDelegate.location)
+        reverseGeocodeSearchOption.reverseGeoPoint = CLLocationCoordinate2DMake((AppDelegate.location.latitude), (AppDelegate.location.longitude))
+        let flag = geocodeSearch.reverseGeoCode(reverseGeocodeSearchOption)
+        if flag {
+            print("反geo 检索发送成功")
+        } else {
+            print("反geo 检索发送失败")
         }
+    }
+    
+    /**
+     *返回反地理编码搜索结果
+     *@param searcher 搜索对象
+     *@param result 搜索结果
+     *@param error 错误号，@see BMKSearchErrorCode
+     */
+    func onGetReverseGeoCodeResult(_ searcher: BMKGeoCodeSearch!, result: BMKReverseGeoCodeResult!, errorCode error: BMKSearchErrorCode) {
+        print("onGetReverseGeoCodeResult error: \(error)")
         
-        //提交订单成功后上传一个位置点
-        DispatchQueue.global().async {
-            sleep(2)
-            DispatchQueue.main.async {
-                _ = self.navigationController?.popToViewController(vcl!, animated: true)
+        if error == BMK_SEARCH_NO_ERROR {
+            let item = BMKPointAnnotation()
+            item.coordinate = result.location
+            item.title = result.address
+            
+            print(item.title)
+            
+            
+            let vcl = navigationController?.viewControllers[0]
+            NotPayTableViewController.shouldRefresh = true
+            
+            let hud: MBProgressHUD = MBProgressHUD.showHUDAddedTo(self.navigationController!.view, animated: true)
+            
+            // Configure for text only and offset down
+            hud.mode = .text
+            hud.labelText = "提交订单成功，即将返回..."
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            hud.hide(true, afterDelay: 2)
+            
+            //判断连接状态
+            let reachability = Reachability.forInternetConnection()
+            
+            if reachability!.isReachable(){
+                
+                locationBiz.updataLocation(AppDelegate.location, item.title)
+            } else {
+                
+                locationBiz.saveLocationPointInLocal(AppDelegate.location, item.title)
+            }
+            
+            //提交订单成功后上传一个位置点
+            DispatchQueue.global().async {
+                sleep(2)
+                DispatchQueue.main.async {
+                    _ = self.navigationController?.popToViewController(vcl!, animated: true)
+                }
             }
         }
     }
+
     
     /**
      * 提交订单失败回调方法

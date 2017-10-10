@@ -8,8 +8,10 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate, HttpResponseProtocol, BMKLocationServiceDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate, HttpResponseProtocol, BMKLocationServiceDelegate, BMKGeoCodeSearchDelegate {
     
+    
+    var geocodeSearch: BMKGeoCodeSearch!
     
     /// 记录用户最近坐标
     fileprivate var location: CLLocationCoordinate2D?
@@ -19,6 +21,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HttpResponsePr
     
     /// 用户位置是否有更新
     fileprivate var isUpdataLocation: Bool = true
+    
+    /// 地理反编码是否回调
+    fileprivate var isOnGetReverseGeoCodeResult: Bool = false
     
     /// 百度地图定位服务
     fileprivate var localService: BMKLocationService!
@@ -86,10 +91,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HttpResponsePr
                         if reachability!.isReachable(){
                             biz.login(userName: name, password: pwd, httpresponseProtocol: self)
                             
-//                            bizToken.uploadToken(strUserId: (AppDelegate.user?.IDX)!, strCID: AppDelegate.cid, strToken: AppDelegate.token, httpresponseProtocol: self)
+                            //                            bizToken.uploadToken(strUserId: (AppDelegate.user?.IDX)!, strCID: AppDelegate.cid, strToken: AppDelegate.token, httpresponseProtocol: self)
                             
                             
-//                            bizToken.uploadToken(strUserId: "", strCID: "", strToken: "", httpresponseProtocol: self)
+                            //                            bizToken.uploadToken(strUserId: "", strCID: "", strToken: "", httpresponseProtocol: self)
                         }else{
                             responseError("网络连接不可用!")
                         }
@@ -113,6 +118,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HttpResponsePr
         super.viewDidLoad()
         self.navigationController?.navigationBar.tintColor = UIColor.orange
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.orange]
+        
+        
+        geocodeSearch = BMKGeoCodeSearch()
+        geocodeSearch.delegate = self
+        
+        
         dismissLoginField()
         
         
@@ -126,6 +137,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HttpResponsePr
     
     deinit {
         
+        geocodeSearch.delegate = nil // 不用时，置nil
         print("loginVC deinit")
     }
     
@@ -205,7 +217,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HttpResponsePr
             }
             
             self.bizToken.uploadToken(strUserId: (AppDelegate.user?.IDX)!, strCID: AppDelegate.cid, strToken: AppDelegate.token, httpresponseProtocol: self)
-            
         }
         
         title = ""
@@ -242,33 +253,35 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HttpResponsePr
         Tools.showAlertDialog(error, self)
     }
     
-//    /**
-//     * 显示对话框提示用户信息
-//     *
-//     * message 显示的信息
-//     */
-//    fileprivate func showAlertDialog (_ message: String) {
-// 
-//        let alert : UIAlertController = UIAlertController.init(title: message, message: "", preferredStyle: .alert)
-//        alert.addAction(UIAlertAction.init(title: "确定", style: .default, handler: { (UIAlertAction) in
-//        }))
-//        self.present(alert, animated: true, completion: nil)
-//    }
+    //    /**
+    //     * 显示对话框提示用户信息
+    //     *
+    //     * message 显示的信息
+    //     */
+    //    fileprivate func showAlertDialog (_ message: String) {
+    //
+    //        let alert : UIAlertController = UIAlertController.init(title: message, message: "", preferredStyle: .alert)
+    //        alert.addAction(UIAlertAction.init(title: "确定", style: .default, handler: { (UIAlertAction) in
+    //        }))
+    //        self.present(alert, animated: true, completion: nil)
+    //    }
     
     
     // MARK: - BMKLocationServiceDelegate
     // 位置坐标发生改变
     func didUpdate(_ userLocation: BMKUserLocation!) {
         location = userLocation.location.coordinate
+        
         isUpdataLocation = true
+        
+        //记录最新的位置
+        AppDelegate.location = userLocation.location.coordinate
+        
         if biz.isNeedChangeUpdataLocationSpanTime {//上传位置点间隔时间需要进行调整
             print("更改上传位置点间隔时间：更改为\(biz.updataLocationSpanTimeMin)分钟")
             startUpdataLocationTimer()
             biz.isNeedChangeUpdataLocationSpanTime = false
         }
-        
-        //记录最新的位置
-        AppDelegate.location = userLocation.location.coordinate
     }
     
     
@@ -280,35 +293,88 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HttpResponsePr
             print("关闭定时上传位置点信息计时器")
         }
         
-        #if DEBUG
-            localTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(LoginViewController.updataLocation(_:)), userInfo: nil, repeats: true)
-        #else
-            localTimer = Timer.scheduledTimer(timeInterval: biz.updataLocationSpanTimeMin * 60, target: self, selector: #selector(LoginViewController.updataLocation(_:)), userInfo: nil, repeats: true)
-        #endif
+        DispatchQueue.global().async {
+            while (self.location == nil) {
+                sleep(1)
+                print("未定位，延迟上传位置...")
+            }
+            self.updataLocation()
+        }
+        
+        localTimer = Timer.scheduledTimer(timeInterval: biz.updataLocationSpanTimeMin * 60, target: self, selector: #selector(LoginViewController.updataLocation), userInfo: nil, repeats: true)
+        
         print("开启定时上传位置点信息计时器")
     }
+    
     
     // 测试用来查看上传多少条记录，无实用功能
     var i: Int = 0
     // 上传位置信息
-    func updataLocation (_ timer: Timer) {
+    func updataLocation () {
         print("上传位置点信息！\(i)")
         i += 1
-        if let lo = location {
-            if isUpdataLocation {
+        if isUpdataLocation {
+            
+            let reverseGeocodeSearchOption = BMKReverseGeoCodeOption()
+            reverseGeocodeSearchOption.reverseGeoPoint = CLLocationCoordinate2DMake((location?.latitude)!, (location?.longitude)!)
+            let flag = geocodeSearch.reverseGeoCode(reverseGeocodeSearchOption)
+            if flag {
+                print("反geo 检索发送成功")
+            } else {
+                print("反geo 检索发送失败")
+            }
+            
+            isOnGetReverseGeoCodeResult = false
+            
+            // 延迟20秒，如果回调未成功，直接上传定位点。
+            DispatchQueue.global().async {
+                sleep(20)
+                if self.isOnGetReverseGeoCodeResult == false {
+                    if let lo = self.location {
+                        //判断连接状态
+                        let reachability = Reachability.forInternetConnection()
+                        if reachability!.isReachable(){
+                            self.biz.updataLocation(lo, "iOS反向编码回调失败")
+                        }else{
+                            self.biz.saveLocationPointInLocal(lo, "iOS反向编码回调失败")
+                        }
+                        self.isUpdataLocation = false
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    /**
+     *返回反地理编码搜索结果
+     *@param searcher 搜索对象
+     *@param result 搜索结果
+     *@param error 错误号，@see BMKSearchErrorCode
+     */
+    func onGetReverseGeoCodeResult(_ searcher: BMKGeoCodeSearch!, result: BMKReverseGeoCodeResult!, errorCode error: BMKSearchErrorCode) {
+        
+        print("onGetReverseGeoCodeResult error: \(error)")
+        
+        if error == BMK_SEARCH_NO_ERROR {
+            
+            isOnGetReverseGeoCodeResult = true
+            
+            let item = BMKPointAnnotation()
+            item.coordinate = result.location
+            item.title = result.address
+            
+            print(item.title)
+            
+            if let lo = location {
                 //判断连接状态
                 let reachability = Reachability.forInternetConnection()
-                
-                #if DEBUG
-                    print("dubug模式，不上传位置信息")
-                #else
-                    if reachability!.isReachable(){
-                        biz.updataLocation(lo)
-                    }else{
-                        biz.saveLocationPointInLocal(lo)
-                    }
-                    isUpdataLocation = false
-                #endif
+                if reachability!.isReachable(){
+                    biz.updataLocation(lo, item.title)
+                }else{
+                    biz.saveLocationPointInLocal(lo, item.title)
+                }
+                isUpdataLocation = false
             }
         }
     }

@@ -17,21 +17,21 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        if(UserDefaults.standard.bool(forKey: "firstStart") == false) {
-//            //首次启动APP，使用凯东源启动页
-//            addLogoAnimation()
-//        } else {
+        if(UserDefaults.standard.bool(forKey: "firstStart") == false) {
+            //首次启动APP，使用凯东源启动页
+            addLogoAnimation()
+        } else {
             //非首次启动APP，使用怡宝启动页
             WelcomeViewController.isShouldDoTimer = true
             
             DispatchQueue.global().async {
-//                sleep(2)
+                sleep(2)
                 DispatchQueue.main.async {
                     if WelcomeViewController.isShouldDoTimer {
                         self.performSegue(withIdentifier: "skipToLogin", sender: nil)
                     }
                 }
-//            }
+            }
         }
     }
     

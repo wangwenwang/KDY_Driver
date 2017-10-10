@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "ic_button_small.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "ad_pic_0.jpg",
       "scale" : "2x"
     },
     {

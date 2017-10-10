@@ -56,17 +56,17 @@ extension UIImage {
      *
      *  return 压缩后图片的二进制
      */
-    func compressImage(_ image: UIImage, maxLength: Int, maxWidthOrHeight: CGFloat) -> Data? {
+    func compressImage(_ image: UIImage, maxLength: Int) -> Data? {
         
-        let newSize = self.scaleImage(image, imageLength: maxWidthOrHeight)
+        let newSize = self.scaleImage(image, imageLength: 350)
         let newImage = self.resizeImage(image, newSize: newSize)
         
         var compress:CGFloat = 0.9
         var data = UIImageJPEGRepresentation(newImage, compress)
         
         while data?.count > maxLength && compress > 0.01 {
-            data = UIImageJPEGRepresentation(newImage, compress)
             compress -= 0.02
+            data = UIImageJPEGRepresentation(newImage, compress)
         }
         
         return data
@@ -83,8 +83,8 @@ extension UIImage {
      */
     func  scaleImage(_ image: UIImage, imageLength: CGFloat) -> CGSize {
         
-        var newWidth:CGFloat = image.size.width
-        var newHeight:CGFloat = image.size.height
+        var newWidth:CGFloat = 0.0
+        var newHeight:CGFloat = 0.0
         let width = image.size.width
         let height = image.size.height
         

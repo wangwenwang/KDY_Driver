@@ -34,17 +34,15 @@ class DriverListPayBiz: NSObject {
     /**
      * 提交订单
      *
-     * idx:              订单的 idx数组
+     * strOrdersIdx: 订单的 idx数组
      *
-     * str:              签名图片的 base64 字符串
+     * autographStr: 签名图片的 base64 字符串
      *
-     * str1:             现场图片1的 base64 字符串
+     * image1Str: 现场图片1的 base64 字符串
      *
-     * str2:             现场图片2的 base64 字符串
+     * image2Str: 现场图片2的 base64 字符串
      *
-     * str3:             回单单号
-     *
-     * responseProtocol: 网络请求协议
+     * httpresponseProtocol: 网络请求协议
      */
     func payOrderWithPicture (orderIdx idx: String, autographStr str: String, image1Str str1: String, image2Str str2: String, deliveNoStr str3 : String, httpresponseProtocol responseProtocol: HttpResponseProtocol) {
         

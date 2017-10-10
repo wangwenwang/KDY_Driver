@@ -37,18 +37,12 @@ class PushOrderViewController: UIViewController, UITableViewDelegate, UITableVie
         return SHIPMENT_List.count
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        return 70
-    }
-    
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let pushOrderSimple: SHIPMENT_List = SHIPMENT_List[(indexPath as NSIndexPath).row]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "PushOrderTableViewCell", for: indexPath) as! PushOrderTableViewCell
-        cell.ORD_NO.text = pushOrderSimple.ORD_NO
-        cell.ORD_NO_CLIENT.text = pushOrderSimple.ORD_NO_CLIENT
+        cell.titleLabel.text = pushOrderSimple.ORD_NO
         
         return cell
     }

@@ -83,8 +83,8 @@ extension UIImage {
      */
     func  scaleImage(_ image: UIImage, imageLength: CGFloat) -> CGSize {
         
-        var newWidth:CGFloat = 0.0
-        var newHeight:CGFloat = 0.0
+        var newWidth:CGFloat = image.size.width
+        var newHeight:CGFloat = image.size.height
         let width = image.size.width
         let height = image.size.height
         

@@ -116,6 +116,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HttpResponsePr
     // MARK: - 生命周期
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.navigationController?.navigationBar.tintColor = UIColor.orange
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.orange]
         

@@ -104,6 +104,8 @@ class MainViewController: UIViewController, HttpResponseProtocol, BMKMapViewDele
         
         super.viewDidLoad()
         
+        self.navigationController?.view.backgroundColor = UIColor.white
+        
         self.tabBarController?.tabBar.tintColor = UIColor.orange
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.orange]

@@ -49,6 +49,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BMKGeneralDelegate, GeTui
     //    }
     
     
+    func getImageWithColor(color:UIColor)->UIImage{
+        let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
+        UIGraphicsBeginImageContext(rect.size)
+        let context = UIGraphicsGetCurrentContext()
+        context!.setFillColor(color.cgColor)
+        context!.fill(rect)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image!
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         
@@ -75,7 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BMKGeneralDelegate, GeTui
         
         //去掉返回按钮得字
         UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -60), for: .default)
-        
+//        UIBarButtonItem.appearance().setBackgroundImage(getImageWithColor(color: UIColor.white), for: .normal, barMetrics: UIBarMetrics.init(rawValue: 1)!)
         
         return true
     }

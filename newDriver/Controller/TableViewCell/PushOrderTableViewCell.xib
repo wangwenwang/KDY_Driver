@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -8,18 +8,33 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="PushOrderTableViewCell" customModule="newDriver" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="60" id="KGk-i7-Jjw" customClass="PushOrderTableViewCell" customModule="newDriver" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <frame key="frameInset" width="320" height="44"/>
+                <frame key="frameInset" width="320" height="59"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Obr-WW-h0Q">
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zc3-Dv-Fsg" userLabel="View1">
                                 <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="订单编号: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EPg-FM-NwO">
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QHI01000000020600" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="df4-1y-YXm">
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="客户单号: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cdq-M3-y9z">
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QHI01000000020600" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OOR-xN-2yL">
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -27,8 +42,14 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="df4-1y-YXm" firstAttribute="centerY" secondItem="Zc3-Dv-Fsg" secondAttribute="centerY" id="uAf-Rx-EVI"/>
-                                    <constraint firstItem="df4-1y-YXm" firstAttribute="leading" secondItem="Zc3-Dv-Fsg" secondAttribute="leading" constant="15" id="yan-fv-vOr"/>
+                                    <constraint firstItem="OOR-xN-2yL" firstAttribute="centerY" secondItem="Cdq-M3-y9z" secondAttribute="centerY" id="5CK-ij-mo6"/>
+                                    <constraint firstItem="Cdq-M3-y9z" firstAttribute="leading" secondItem="EPg-FM-NwO" secondAttribute="leading" id="8ff-eC-dph"/>
+                                    <constraint firstItem="OOR-xN-2yL" firstAttribute="leading" secondItem="Cdq-M3-y9z" secondAttribute="trailing" id="LcQ-ld-EFR"/>
+                                    <constraint firstItem="df4-1y-YXm" firstAttribute="centerY" secondItem="EPg-FM-NwO" secondAttribute="centerY" id="RhB-qY-2hW"/>
+                                    <constraint firstItem="EPg-FM-NwO" firstAttribute="centerY" secondItem="Zc3-Dv-Fsg" secondAttribute="centerY" constant="-7" id="VZ0-FF-Dbc"/>
+                                    <constraint firstItem="Cdq-M3-y9z" firstAttribute="centerY" secondItem="Zc3-Dv-Fsg" secondAttribute="centerY" constant="13" id="dty-VN-vB3"/>
+                                    <constraint firstItem="df4-1y-YXm" firstAttribute="leading" secondItem="EPg-FM-NwO" secondAttribute="trailing" id="ivF-Gg-4La"/>
+                                    <constraint firstItem="EPg-FM-NwO" firstAttribute="leading" secondItem="Zc3-Dv-Fsg" secondAttribute="leading" constant="15" id="sBE-7c-G7R"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -49,8 +70,10 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="ORD_NO_CLIENT" destination="OOR-xN-2yL" id="WXf-Qu-pX0"/>
                 <outlet property="titleLabel" destination="df4-1y-YXm" id="cZd-CW-J0e"/>
             </connections>
+            <point key="canvasLocation" x="44" y="126"/>
         </tableViewCell>
     </objects>
 </document>

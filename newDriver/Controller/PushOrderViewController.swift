@@ -24,6 +24,7 @@ class PushOrderViewController: UIViewController, UITableViewDelegate, UITableVie
         
         self.automaticallyAdjustsScrollViewInsets = false
         self.myTableView.register(UINib.init(nibName: "PushOrderTableViewCell", bundle: nil), forCellReuseIdentifier: "PushOrderTableViewCell")
+        self.myTableView.rowHeight = 60
     }
     
     override func didReceiveMemoryWarning() {
@@ -43,6 +44,7 @@ class PushOrderViewController: UIViewController, UITableViewDelegate, UITableVie
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "PushOrderTableViewCell", for: indexPath) as! PushOrderTableViewCell
         cell.titleLabel.text = pushOrderSimple.ORD_NO
+        cell.ORD_NO_CLIENT.text = pushOrderSimple.ORD_NO_CLIENT
         
         return cell
     }

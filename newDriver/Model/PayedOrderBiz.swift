@@ -62,6 +62,11 @@ class PayedOrderBiz {
                                 let list: Array<JSON> = json["result"].arrayValue
                                 for json in list {
                                     let order: Order = Mapper<Order>().map(JSONString: json.description)!
+                                    
+                                    let oneLine = Tools.getHeightOfString(text: "fds", fontSize: 13, width: CGFloat(MAXFLOAT))
+                                    let mulLine = Tools.getHeightOfString(text: order.ORD_TO_ADDRESS, fontSize: 13, width: (SCREEN_WIDTH - (8 + 57 + 3 + 8)))
+                                    order.cellHeight = 150 + (mulLine - oneLine)
+                                    
                                     wkSelf.orders.append(order)
                                 }
                                 wkSelf.page = wkSelf.tempPage

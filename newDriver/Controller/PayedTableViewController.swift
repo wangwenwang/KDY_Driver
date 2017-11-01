@@ -130,7 +130,9 @@ class PayedTableViewController: UITableViewController, HttpResponseProtocol {
     
     /// 设置 cell 高度
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 132
+        
+        let or: Order = biz.orders[(indexPath as NSIndexPath).section]
+        return or.cellHeight
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

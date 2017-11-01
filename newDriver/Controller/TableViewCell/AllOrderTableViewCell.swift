@@ -51,6 +51,9 @@ class AllOrderTableViewCell: UITableViewCell {
     /// 订单体积
     @IBOutlet weak var orderIssueVolumeField: UILabel!
     
+    /// 客户地址
+    @IBOutlet weak var ORD_TO_ADDRESS: UILabel!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -72,6 +75,7 @@ class AllOrderTableViewCell: UITableViewCell {
             orderIssueQtyField.text = Tools.twoDecimal(text: order.ORD_ISSUE_QTY) + "件"
             orderIssueWeightField.text = Tools.twoDecimal(text: order.ORD_ISSUE_WEIGHT) + "吨"
             orderIssueVolumeField.text = Tools.twoDecimal(text: order.ORD_ISSUE_VOLUME) + "方"
+            ORD_TO_ADDRESS.text = order.ORD_TO_ADDRESS
             if order.AUDIT_FLAG == "Y" {
                 
                 auditStatus.text = "已计费"

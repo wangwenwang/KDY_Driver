@@ -21,6 +21,8 @@ class AutographUIView: UIView {
     /// 贝赛尔曲线
     fileprivate var bezier = UIBezierPath()
     
+    var addressHeight: CGFloat = 0.0
+    
     /// 清除用户绘制的签名
     func backImage() {
         if allLine.isEmpty == false { // 如果数组不为空才执行
@@ -50,6 +52,7 @@ class AutographUIView: UIView {
     
     // MARK:- drawRect
     override func draw(_ rect: CGRect) {
+        drawAddress()
         drawDate()
         drawAutograph()
     }
@@ -77,9 +80,54 @@ class AutographUIView: UIView {
         let textSize = NSString(string: s).size(attributes: attributes)
         
         let x: CGFloat = self.frame.width - textSize.width - 5
-        let y: CGFloat = self.frame.height - textSize.height
+        let y: CGFloat = self.frame.height - textSize.height - addressHeight + 2
         let width: CGFloat = self.frame.width
         let height: CGFloat = self.frame.height
+        
+        s.draw(in: CGRect(x: x, y: y, width: width, height: height), withAttributes: attributes)
+    }
+    
+    // 绘制地址
+    fileprivate func drawAddress () {
+        
+        // PayOrderViewController.payAddress
+        
+        let s: NSString = PayOrderViewController.payAddress as NSString
+        
+        let fieldColor: UIColor = UIColor.darkGray
+        
+        let fieldFont = UIFont(name: "Helvetica Neue", size: 14)
+        
+        let paraStyle = NSMutableParagraphStyle()
+        paraStyle.lineSpacing = 1.0
+        
+        let skew = 0.1
+        
+        let attributes = [
+            NSForegroundColorAttributeName: fieldColor,
+            NSParagraphStyleAttributeName: paraStyle,
+            NSObliquenessAttributeName: skew,
+            NSFontAttributeName: fieldFont!
+            ] as [String : Any]
+        
+        let textSize = NSString(string: s).size(attributes: attributes)
+        
+        // 地址高度
+        addressHeight = Tools.getHeightOfStringUIFont(text: s as String, font: fieldFont!, width: self.frame.width - 5)
+        // 单行高度
+        let oneHeight = Tools.getHeightOfStringUIFont(text: "fds", font: fieldFont!, width: CGFloat(MAXFLOAT))
+        // 超高
+        let overHeight = addressHeight - oneHeight
+        print(overHeight)
+        
+        var x: CGFloat = self.frame.width - textSize.width - 5
+        let y: CGFloat = self.frame.height - textSize.height - overHeight
+        var width: CGFloat = self.frame.width
+        if(x < 0) {
+            x = 0
+            width = width - 5
+        }
+        let height: CGFloat = addressHeight
         
         s.draw(in: CGRect(x: x, y: y, width: width, height: height), withAttributes: attributes)
     }

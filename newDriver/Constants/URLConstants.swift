@@ -25,7 +25,7 @@ struct URLConstants {
     /// 登陆接口
     static let loginUrl: String = URLConstants.baseUrl + "Login"
     
-    /// 获取未交付订单接口 带时间
+    /// 获取未交付订单列表接口 带时间
     static let API_GetDriverDateOrderClientList: String = URLConstants.baseUrl + "GetDriverDateOrderClientList"
     
     /// 修改登录密码

@@ -19,14 +19,25 @@ class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePick
     /// 订单的 idx
     var orderIDX: String = ""
     
+    /// 订单号
+    var orderNOs: NSArray!
+    
     /// 交付订单业务类
-//    let biz: PayOrderBiz = PayOrderBiz()
+    //    let biz: PayOrderBiz = PayOrderBiz()
     
     let biz: DriverListPayBiz = DriverListPayBiz()
     
+    // 是否成功交付
+    var isPaySuccess: Bool = false
+    
+    // (交付时地址)
+    static var payAddress: String! = ""
     
     /// 签名图片
     var autograph: UIImage?
+    
+    private var picture1FieldContext = 0
+    private var picture2FieldContext = 1
     
     /// 现场图片1
     var image1: UIImage? {
@@ -34,6 +45,7 @@ class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePick
             picture1Field.image = image1
         }
     }
+    
     
     /// 现场图片2
     var image2: UIImage? {
@@ -122,6 +134,9 @@ class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePick
         self.view.endEditing(true)
     }
     
+    @IBOutlet weak var picture1ReSetBtn: UIButton!
+    
+    @IBOutlet weak var picture2ReSetBtn: UIButton!
     
     fileprivate var locationBiz = LoginBiz()
     
@@ -142,6 +157,12 @@ class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePick
         
         // 追加键盘监听
         addNotification()
+        
+        // KVO
+        picture1Field.addObserver(self, forKeyPath: "image", options: .new, context: &picture1FieldContext)
+        picture2Field.addObserver(self, forKeyPath: "image", options: .new, context: &picture2FieldContext)
+        
+        geo()
     }
     
     override func updateViewConstraints() {
@@ -150,7 +171,10 @@ class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePick
     }
     
     deinit {
+        
         removeNotification()
+        picture1Field.removeObserver(self, forKeyPath: "image", context: &picture1FieldContext)
+        picture2Field.removeObserver(self, forKeyPath: "image", context: &picture2FieldContext)
     }
     
     // MARK: - 私有方法
@@ -228,11 +252,12 @@ class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePick
         let image2Str = biz.changeImageToString(image2)
         let deliveStr : String = (remarkOrderNoLabel.text?.trimmingCharacters(in: CharacterSet.whitespaces))!
         
-        //判断连接状态
+        // 判断连接状态
         let reachability = Reachability.forInternetConnection()
         if reachability!.isReachable(){
             showProgress()
             biz.payOrderWithPicture(orderIdx: orderIDX, autographStr: autographStr, image1Str: image1Str, image2Str: image2Str, deliveNoStr: deliveStr, httpresponseProtocol: self)
+            isPaySuccess = true
         }else{
             self.responseError("网络连接不可用!")
         }
@@ -273,6 +298,14 @@ class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePick
     /// 提交订单成功回调
     func responseSuccess() {
         
+        geo()
+        isPaySuccess = true
+    }
+    
+    
+    // 反geo 检索
+    func geo() {
+        
         let reverseGeocodeSearchOption = BMKReverseGeoCodeOption()
         let geocodeSearch: BMKGeoCodeSearch = BMKGeoCodeSearch()
         geocodeSearch.delegate = self
@@ -303,39 +336,45 @@ class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePick
             print(item.title)
             
             
-            let vcl = navigationController?.viewControllers[0]
-            NotPayTableViewController.shouldRefresh = true
-            
-            let hud: MBProgressHUD = MBProgressHUD.showHUDAddedTo(self.navigationController!.view, animated: true)
-            
-            // Configure for text only and offset down
-            hud.mode = .text
-            hud.labelText = "提交订单成功，即将返回..."
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
-            hud.hide(true, afterDelay: 2)
-            
-            //判断连接状态
-            let reachability = Reachability.forInternetConnection()
-            
-            if reachability!.isReachable(){
+            if(isPaySuccess) {
                 
-                locationBiz.updataLocation(AppDelegate.location, item.title)
+                let vcl = navigationController?.viewControllers[0]
+                NotPayTableViewController.shouldRefresh = true
+                
+                let hud: MBProgressHUD = MBProgressHUD.showHUDAddedTo(self.navigationController!.view, animated: true)
+                
+                // Configure for text only and offset down
+                hud.mode = .text
+                hud.labelText = "提交订单成功，即将返回..."
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
+                hud.hide(true, afterDelay: 2)
+                
+                //判断连接状态
+                let reachability = Reachability.forInternetConnection()
+                
+                if reachability!.isReachable(){
+                    
+                    locationBiz.updataLocation(AppDelegate.location, item.title)
+                } else {
+                    
+                    locationBiz.saveLocationPointInLocal(AppDelegate.location, item.title)
+                }
+                
+                //提交订单成功后上传一个位置点
+                DispatchQueue.global().async {
+                    sleep(2)
+                    DispatchQueue.main.async {
+                        _ = self.navigationController?.popToViewController(vcl!, animated: true)
+                    }
+                }
             } else {
                 
-                locationBiz.saveLocationPointInLocal(AppDelegate.location, item.title)
-            }
-            
-            //提交订单成功后上传一个位置点
-            DispatchQueue.global().async {
-                sleep(2)
-                DispatchQueue.main.async {
-                    _ = self.navigationController?.popToViewController(vcl!, animated: true)
-                }
+                PayOrderViewController.payAddress = item.title
             }
         }
     }
-
+    
     
     /**
      * 提交订单失败回调方法
@@ -420,7 +459,43 @@ class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePick
     // MARK: - 事件
     fileprivate func showUpdataPictureWay () {
         
-        let actionSheet : UIActionSheet = UIActionSheet.init(title: "", delegate: self, cancelButtonTitle:"取消", destructiveButtonTitle: nil, otherButtonTitles:"拍照", "相册", "图库")
+        let actionSheet : UIActionSheet
+        
+        // 只弹出拍照
+        var alertCamera: Bool = false
+        
+        // 订单号有误
+        var errorOrderNO: Bool = false
+        
+        for str in orderNOs {
+           let orderNO = str as! String
+            if(orderNO.characters.count >= 3) {
+                let index = orderNO.index(orderNO.startIndex, offsetBy: 3)
+                // 订单前3位
+                let prefix = orderNO.substring(to: index)
+                // 是否为YIB
+                let prefixNSString = NSString(string:prefix)
+                // 比较字符串，不区分大小写
+                if(prefixNSString.caseInsensitiveCompare("YIB" as String).rawValue == 0 || prefixNSString.caseInsensitiveCompare("XHA" as String).rawValue == 0) {
+                    alertCamera = true
+                }
+            } else {
+                errorOrderNO = true
+            }
+        }
+        
+        if(!errorOrderNO) {
+            if(alertCamera) {
+                actionSheet = UIActionSheet.init(title: "", delegate: self, cancelButtonTitle:"取消", destructiveButtonTitle: nil, otherButtonTitles:"拍照")
+            } else {
+                actionSheet = UIActionSheet.init(title: "", delegate: self, cancelButtonTitle:"取消", destructiveButtonTitle: nil, otherButtonTitles:"拍照", "相册", "图库")
+                print("该订单非怡宝或雪花")
+            }
+        } else {
+            actionSheet = UIActionSheet.init(title: "", delegate: self, cancelButtonTitle:"取消", destructiveButtonTitle: nil, otherButtonTitles:"拍照", "相册", "图库")
+            print("订单号有误")
+        }
+        
         actionSheet.show(in: UIApplication.shared.keyWindow!)
     }
     
@@ -486,7 +561,7 @@ class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePick
         pickerController = UIImagePickerController()
         pickerController?.view.backgroundColor = UIColor.groupTableViewBackground
         pickerController?.delegate = self
-//        pickerController?.allowsEditing = true
+        //        pickerController?.allowsEditing = true
     }
     
     
@@ -516,6 +591,23 @@ class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePick
     }
     
     
+    // MARK: - KVO
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        
+        if context == &picture1FieldContext {
+            
+            picture1ReSetBtn.setTitle("重新上传", for: .normal)
+            
+            if let newValue = change?[.newKey] {
+                print(newValue)
+            }
+        }
+        
+        if context == &picture2FieldContext {
+            
+            picture2ReSetBtn.setTitle("重新上传", for: .normal)
+        }
+    }
     
     
     /// 解开注释产生bug，例如触发函数后再点添加图片，会出现奇怪现象

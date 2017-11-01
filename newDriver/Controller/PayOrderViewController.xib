@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -14,7 +14,9 @@
                 <outlet property="buttomHeight" destination="5HU-QJ-uby" id="oOP-cw-0u6"/>
                 <outlet property="myScrollView" destination="uZy-Zc-hUK" id="7Z6-km-r4i"/>
                 <outlet property="picture1Field" destination="m1x-kE-dUY" id="TSQ-Ms-3y2"/>
+                <outlet property="picture1ReSetBtn" destination="P4z-VA-5K1" id="Ike-Cz-52e"/>
                 <outlet property="picture2Field" destination="G5T-CF-aUn" id="aIM-0C-Fjq"/>
+                <outlet property="picture2ReSetBtn" destination="ZwO-Ic-JdR" id="QlE-fY-lOS"/>
                 <outlet property="progressBarField" destination="RwV-5p-Uz1" id="dqY-D5-kaH"/>
                 <outlet property="progressField" destination="Kw1-SN-M4U" id="YCC-mX-mjW"/>
                 <outlet property="remarkOrderNoLabel" destination="NVg-dR-SIP" id="8Oy-Bh-Kw8"/>

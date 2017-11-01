@@ -510,6 +510,7 @@ class OrderDetailViewController: UIViewController, HttpResponseProtocol, UITable
             self.title = ""
             let payOrderController = PayOrderViewController(nibName:"PayOrderViewController", bundle: nil)
             payOrderController.orderIDX = (biz.order?.IDX)!
+            payOrderController.orderNOs = [(biz.order?.ORD_NO)!]
             print(biz.order)
             self.navigationController?.pushViewController(payOrderController, animated: true)
         } else {

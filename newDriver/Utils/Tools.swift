@@ -60,4 +60,22 @@ class Tools: NSObject {
         let sizeToFit = label.sizeThatFits(CGSize.init(width: width, height: CGFloat(MAXFLOAT)))
         return sizeToFit.height;
     }
+    
+    /// 根据 NSString width, 计算NSString高度
+    ///
+    /// - parameter text:     文字
+    /// - parameter font:     字体
+    /// - parameter width:    width
+    ///
+    /// - returns: 高度
+    static func getHeightOfStringUIFont (text: String, font: UIFont, width:CGFloat) -> CGFloat {
+        
+        let label = UILabel.init()
+        label.text = text
+        label.font = font
+        label.numberOfLines = 0;
+        label.lineBreakMode = .byCharWrapping
+        let sizeToFit = label.sizeThatFits(CGSize.init(width: width, height: CGFloat(MAXFLOAT)))
+        return sizeToFit.height;
+    }
 }

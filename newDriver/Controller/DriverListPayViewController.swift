@@ -21,7 +21,7 @@ class DriverListPayViewController: UIViewController, HttpResponseProtocol, UITab
     // 订单简介Cell
     let cellIdentifier = "DriverListPayTableViewCell"
     
-    let cellHeight: CGFloat = 55
+    let cellHeight: CGFloat = 72
     
     
     override func viewDidLoad() {
@@ -45,6 +45,7 @@ class DriverListPayViewController: UIViewController, HttpResponseProtocol, UITab
     
     
     // MARK: - 功能函数
+    // 获取订单id
     func getIdxs() -> String {
         
         var idxs: String = ""
@@ -61,13 +62,26 @@ class DriverListPayViewController: UIViewController, HttpResponseProtocol, UITab
     }
     
     
+    // 获取订单编号
+    func getOrdNos() -> NSArray {
+        
+        var ordNos = [String]()
+        for or: Order in biz.orders {
+            if(or.cellSelected) {
+                ordNos.append(or.ORD_NO)
+            }
+        }
+        return ordNos as NSArray
+    }
+    
+    
     // MARK: - 事件
     @IBAction func allChooseOnclick() {
         
         // 全选
         for or: Order in biz.orders {
             
-            or.cellSelected = !or.cellSelected
+            or.cellSelected = true
         }
         tableView.reloadData();
     }
@@ -75,24 +89,24 @@ class DriverListPayViewController: UIViewController, HttpResponseProtocol, UITab
     
     @IBAction func commitOnclick() {
         
-        // 交付订单
-        let payOrderController = PayOrderViewController(nibName:"PayOrderViewController", bundle: nil)
-        
         let idxs = getIdxs()
         if(idxs != "") {
             
-            payOrderController.orderIDX = getIdxs()
+            // 交付订单
+            let payOrderController = PayOrderViewController(nibName:"PayOrderViewController", bundle: nil)
+            payOrderController.orderIDX = idxs
+            payOrderController.orderNOs = getOrdNos()
+            self.navigationController?.pushViewController(payOrderController, animated: true)
         } else {
             
             Tools.showAlertDialog("请选择需要交付的订单", self)
         }
-        self.navigationController?.pushViewController(payOrderController, animated: true)
     }
     
     
     // MARK: - UITableViewDelegate
-    // 设置 tableview 数据数量
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return biz.orders.count
     }
     
@@ -133,11 +147,8 @@ class DriverListPayViewController: UIViewController, HttpResponseProtocol, UITab
         for order:Order in biz.orders {
             
             let oneLine = Tools.getHeightOfString(text: "fds", fontSize: 14, width: CGFloat(MAXFLOAT))
-            
-            let mulLine = Tools.getHeightOfString(text: order.ORD_TO_ADDRESS, fontSize: 14, width: (SCREEN_WIDTH - 8 - 51 - 5 - 25 - 8))
-            
+            let mulLine = Tools.getHeightOfString(text: order.ORD_TO_ADDRESS, fontSize: 14, width: (SCREEN_WIDTH - 8 - 65 - 3))
             let overHeight = mulLine - oneLine
-            
             if(overHeight > 0) {
                 
                 order.cellHeight = cellHeight + overHeight

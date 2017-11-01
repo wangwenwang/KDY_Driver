@@ -10,8 +10,11 @@ import UIKit
 
 class DriverListPayTableViewCell: UITableViewCell {
 
-    // 订单号
+    // 订单编号
     @IBOutlet weak var ORD_NO: UILabel!
+    
+    // 客户单号
+    @IBOutlet weak var ORD_NO_CLIENT: UILabel!
     
     // 地址
     @IBOutlet weak var ORD_TO_ADDRESS: UILabel!
@@ -41,6 +44,7 @@ class DriverListPayTableViewCell: UITableViewCell {
         if order != nil {
             
             ORD_NO.text = order.ORD_NO;
+            ORD_NO_CLIENT.text = order.ORD_NO_CLIENT;
             ORD_TO_ADDRESS.text = order.ORD_TO_ADDRESS;
             selectedImageView.image = UIImage.init(named: order.cellSelected ? "selected" : "unselect")
         }

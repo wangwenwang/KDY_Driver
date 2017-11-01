@@ -62,7 +62,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BMKGeneralDelegate, GeTui
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        
+//        let p = PayOrderViewController()
+//        p.payAddress = "fsdafsfdsaf11";
+//        
+////        let fsdf: String = PayOrderViewController().payAddress
+//        
+//        print(p.payAddress)
         
         //百度地图设置
         baiduMapManager = BMKMapManager()

@@ -195,7 +195,7 @@
                             <constraint firstItem="b3N-Kd-NQ4" firstAttribute="height" secondItem="rZt-bJ-fth" secondAttribute="height" id="sCd-RJ-fwB"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="订单地址:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tEc-lf-aP0">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="收货地址:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tEc-lf-aP0">
                         <constraints>
                             <constraint firstAttribute="width" constant="57" id="31t-RO-oz3"/>
                         </constraints>

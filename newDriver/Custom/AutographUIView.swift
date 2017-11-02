@@ -88,7 +88,7 @@ class AutographUIView: UIView {
     }
     
     // 绘制地址
-    fileprivate func drawAddress () {
+    public func drawAddress () {
         
         // PayOrderViewController.payAddress
         

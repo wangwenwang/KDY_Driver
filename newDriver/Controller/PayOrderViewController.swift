@@ -371,6 +371,7 @@ class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePick
             } else {
                 
                 PayOrderViewController.payAddress = item.title
+                autographField.setNeedsDisplay()
             }
         }
     }

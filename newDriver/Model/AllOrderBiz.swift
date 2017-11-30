@@ -62,9 +62,9 @@ class AllOrderBiz {
                                 for json in list {
                                     let order: Order = Mapper<Order>().map(JSONString: json.description)!
                                     
-                                    let oneLine = Tools.getHeightOfString(text: "fds", fontSize: 13, width: CGFloat(MAXFLOAT))
-                                    let mulLine = Tools.getHeightOfString(text: order.ORD_TO_ADDRESS, fontSize: 13, width: (SCREEN_WIDTH - (8 + 57 + 3 + 8)))
-                                    order.cellHeight = 150 + (mulLine - oneLine)
+                                    let oneLine = Tools.getHeightOfString(text: "fds", fontSize: 16, width: CGFloat(MAXFLOAT))
+                                    let mulLine = Tools.getHeightOfString(text: order.ORD_TO_ADDRESS, fontSize: 16, width: (SCREEN_WIDTH - (12 + 74 + 3)))
+                                    order.cellHeight = 192 + (mulLine - oneLine)
                                     
                                     wkSelf.orders.append(order)
                                 }

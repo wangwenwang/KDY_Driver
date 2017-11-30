@@ -34,6 +34,8 @@ class OrderDetailBiz {
             "strLicense": ""
         ]
         
+        print("接口\(URLConstants.getOrderTmsInfo)\(parameters)")
+        
         weak var weakSelf = self
 //        NetWorkBaseBiz().postWithPath(path: URLConstants.getOrderTmsInfo, paras: parameters, success: { (result) in
 //            DispatchQueue.main.async {

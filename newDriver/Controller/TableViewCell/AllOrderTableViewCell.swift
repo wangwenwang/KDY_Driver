@@ -24,11 +24,11 @@ class AllOrderTableViewCell: UITableViewCell {
     /// 客户单号
     @IBOutlet weak var ORD_NO_CLIENT: UILabel!
     
-    /// 计费状态
-    @IBOutlet weak var auditStatus: UILabel!
-    
     /// 装运编号
     @IBOutlet weak var orderShipmentNumberField: UILabel!
+    
+    /// 计费状态
+    @IBOutlet weak var auditStatus: UILabel!
     
     /// 装运时间
     @IBOutlet weak var orderLoadDateField: UILabel!
@@ -92,28 +92,3 @@ class AllOrderTableViewCell: UITableViewCell {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

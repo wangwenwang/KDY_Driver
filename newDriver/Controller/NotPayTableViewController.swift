@@ -22,6 +22,8 @@ class NotPayTableViewController: UITableViewController, HttpResponseProtocol {
     
     var eSRefreshFooterView : ESRefreshFooterView! = nil
     
+    let kPageCount: Int = 20
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         DispatchQueue.global().async {
@@ -59,7 +61,7 @@ class NotPayTableViewController: UITableViewController, HttpResponseProtocol {
             //判断连接状态
             let reachability = Reachability.forInternetConnection()
             if reachability!.isReachable(){
-                self.biz.getNotPayOrderData(httpresponseProtocol: self)
+                self.biz.getNotPayOrderData(httpresponseProtocol: self, strPageCount: self.kPageCount)
             }else{
                 self.responseError("网络连接不可用!")
             }
@@ -84,7 +86,7 @@ class NotPayTableViewController: UITableViewController, HttpResponseProtocol {
                     let reachability = Reachability.forInternetConnection()
                     if reachability!.isReachable(){
                         self.biz.tempPage = self.biz.page + 1
-                        self.biz.getNotPayOrderData(httpresponseProtocol: self)
+                        self.biz.getNotPayOrderData(httpresponseProtocol: self, strPageCount: self.kPageCount)
                     }else{
                         self.responseError("网络连接不可用!")
                     }

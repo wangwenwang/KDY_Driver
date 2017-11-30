@@ -21,6 +21,9 @@ class NotPayOrderTableViewCell: UITableViewCell {
     /// 订单编号
     @IBOutlet weak var orderNumberField: UILabel!
     
+    /// 客户单号
+    @IBOutlet weak var ORD_NO_CLIENT: UILabel!
+    
     /// 装运编号
     @IBOutlet weak var orderShipmentNumberField: UILabel!
     
@@ -44,9 +47,6 @@ class NotPayOrderTableViewCell: UITableViewCell {
     
     /// 订单体积
     @IBOutlet weak var orderIssueVolumeField: UILabel!
-    
-    /// 客户单号
-    @IBOutlet weak var ORD_NO_CLIENT: UILabel!
     
     /// 客户地址
     @IBOutlet weak var ORD_TO_ADDRESS: UILabel!
@@ -75,16 +75,3 @@ class NotPayOrderTableViewCell: UITableViewCell {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -51,7 +51,8 @@ class OrderViewController: UIViewController {
             .centerMenuItems(true)
         ]
         
-        let height = (self.navigationController?.navigationBar.frame.height)! + AppDelegate.statusBarHeight
+        let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
+        let height = (self.navigationController?.navigationBar.frame.height)! + statusBarHeight
         let tarBarHeight = self.tabBarController?.tabBar.frame.height
         pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRect(x: 0, y: height, width: self.view.frame.width, height: self.view.frame.height - height - tarBarHeight!), pageMenuOptions: parameters)
 

@@ -22,6 +22,8 @@ class PayedTableViewController: UITableViewController, HttpResponseProtocol {
     
     var eSRefreshFooterView : ESRefreshFooterView! = nil
     
+    let kPageCount: Int = 20
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         DispatchQueue.global().async {
@@ -60,7 +62,7 @@ class PayedTableViewController: UITableViewController, HttpResponseProtocol {
             //判断连接状态
             let reachability = Reachability.forInternetConnection()
             if reachability!.isReachable(){
-                self.biz.getPayedOrderData(httpresponseProtocol: self)
+                self.biz.getPayedOrderData(httpresponseProtocol: self, strPageCount: self.kPageCount)
             }else{
                 self.responseError("网络连接不可用!")
             }
@@ -74,7 +76,7 @@ class PayedTableViewController: UITableViewController, HttpResponseProtocol {
             let reachability = Reachability.forInternetConnection()
             if reachability!.isReachable(){
                 self.biz.tempPage = self.biz.page + 1
-                self.biz.getPayedOrderData(httpresponseProtocol: self)
+                self.biz.getPayedOrderData(httpresponseProtocol: self, strPageCount: self.kPageCount)
             }else{
                 self.responseError("网络连接不可用!")
             }
@@ -86,6 +88,21 @@ class PayedTableViewController: UITableViewController, HttpResponseProtocol {
         self.tableView.reloadData()
         self.tableView.es_stopPullToRefresh(completion: true)
         self.tableView.es_stopLoadingMore()
+        
+        if(eSRefreshFooterView == nil) {
+            if(self.biz.orders.count >= self.biz.page) {
+                eSRefreshFooterView =  self.tableView.es_addInfiniteScrolling {
+                    //判断连接状态
+                    let reachability = Reachability.forInternetConnection()
+                    if reachability!.isReachable(){
+                        self.biz.tempPage = self.biz.page + 1
+                        self.eSRefreshFooterView.animator?.setloadingMoreDescription1("\(self.biz.orders.count)")
+                    }else{
+                        self.responseError("网络连接不可用!")
+                    }
+                }
+            }
+        }
         
         tableView.removeNoOrderPrompt()
     }

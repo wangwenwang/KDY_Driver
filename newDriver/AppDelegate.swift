@@ -24,8 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BMKGeneralDelegate, GeTui
     
     /// 登陆用户信息
     static var user: User?
-    /// 顶部状态栏高度
-    static var statusBarHeight: CGFloat = 20
     /// 当前坐标
     static var location: CLLocationCoordinate2D = CLLocationCoordinate2DMake(0, 0)
     /// 通知cid
@@ -37,11 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BMKGeneralDelegate, GeTui
     
     /// 百度地图初始化用
     var baiduMapManager: BMKMapManager?
-    
-    
-    func application(_ application: UIApplication, willChangeStatusBarFrame newStatusBarFrame: CGRect) {
-        AppDelegate.statusBarHeight = newStatusBarFrame.height
-    }
     
     //    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
     //

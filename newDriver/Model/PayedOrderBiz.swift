@@ -27,7 +27,7 @@ class PayedOrderBiz {
      *
      * httpresponseProtocol: 网络请求协议
      */
-    func getPayedOrderData(httpresponseProtocol responseProtocol: HttpResponseProtocol) {
+    func getPayedOrderData(httpresponseProtocol responseProtocol: HttpResponseProtocol, strPageCount pageCount: Int) {
         
         if let user = AppDelegate.user {
             
@@ -35,7 +35,7 @@ class PayedOrderBiz {
                 "strUserIdx": user.IDX + "",
                 "strIsPay": "Y",
                 "strPage": "\(tempPage)",
-                "strPageCount": "20",
+                "strPageCount": "\(pageCount)",
                 "strStartDate": "1990-05-12",
                 "strEndDate": "2030-05-12",
                 "strLicense": ""
@@ -63,9 +63,9 @@ class PayedOrderBiz {
                                 for json in list {
                                     let order: Order = Mapper<Order>().map(JSONString: json.description)!
                                     
-                                    let oneLine = Tools.getHeightOfString(text: "fds", fontSize: 13, width: CGFloat(MAXFLOAT))
-                                    let mulLine = Tools.getHeightOfString(text: order.ORD_TO_ADDRESS, fontSize: 13, width: (SCREEN_WIDTH - (8 + 57 + 3 + 8)))
-                                    order.cellHeight = 150 + (mulLine - oneLine)
+                                    let oneLine = Tools.getHeightOfString(text: "fds", fontSize: 16, width: CGFloat(MAXFLOAT))
+                                    let mulLine = Tools.getHeightOfString(text: order.ORD_TO_ADDRESS, fontSize: 16, width: (SCREEN_WIDTH - (12 + 74 + 3)))
+                                    order.cellHeight = 192 + (mulLine - oneLine)
                                     
                                     wkSelf.orders.append(order)
                                 }

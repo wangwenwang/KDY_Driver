@@ -112,6 +112,9 @@ class Order: BaseBean {
     /// Cell高度
     var cellHeight: CGFloat = 0
     
+    /// tableView高度
+    var tableViewHeight: CGFloat! = 0
+    
     /// 点击状态
     var cellSelected: Bool = false
     

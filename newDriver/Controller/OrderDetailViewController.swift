@@ -70,14 +70,14 @@ class OrderDetailViewController: UIViewController, HttpResponseProtocol, UITable
     /// 订单流程
     @IBOutlet weak var orderWorkFlow: UILabel!
     
-    /// 交付状态
-    @IBOutlet weak var orderPayState: UILabel!
-    
     /// 订单数量
     @IBOutlet weak var orderIssueQty: UILabel!
     
     /// 订单重量
     @IBOutlet weak var orderIssueWeight: UILabel!
+    
+    /// 交付状态
+    @IBOutlet weak var orderPayState: UILabel!
     
     /// 订单体积
     @IBOutlet weak var orderIssueVolume: UILabel!
@@ -98,6 +98,8 @@ class OrderDetailViewController: UIViewController, HttpResponseProtocol, UITable
             orderDetailsTableView.dataSource = self
         }
     }
+    @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var scrollContentViewHeight: NSLayoutConstraint!
     
     // 请求数据时显示的圈圈
     @IBOutlet weak var progressField: UIActivityIndicatorView!
@@ -111,11 +113,8 @@ class OrderDetailViewController: UIViewController, HttpResponseProtocol, UITable
     // 导航 或 查看路线
     @IBOutlet weak var navigationOrCheckPathBtn: UIButton!
     
-    // 交付订单 或 查看图片
+    // 交付 或 查看图片
     @IBOutlet weak var deliverOrCheckPictureBtn: UIButton!
-    
-    // 计费状态
-    @IBOutlet weak var checkBillingStatusLabel: UILabel!
     
     // 查看计费
     @IBOutlet weak var checkBillingBtn: UIButton!
@@ -592,17 +591,17 @@ class OrderDetailViewController: UIViewController, HttpResponseProtocol, UITable
                 let auditStatus : ShipmentAuditStatus = (biz.order?.ShipmentAuditStatusStatus)!
                 if auditStatus.AUDIT_FLAG == "Y" {
                     
-                    checkBillingStatusLabel.text = kCheckBillingStatus_YES
+//                    checkBillingStatusLabel.text = kCheckBillingStatus_YES
                     checkBillingBtn.setTitle("查看计费", for: .normal)
                 } else if auditStatus.ERROR_FLAG == "Y" {
                     
-                    checkBillingStatusLabel.text = kCheckBillingStatus_CARSH
+//                    checkBillingStatusLabel.text = kCheckBillingStatus_CARSH
                     checkBillingBtn.setTitle(kCheckBillingStatus_CARSH, for: .normal)
                 } else {
                     
                     checkBillingBtn.backgroundColor = UIColor.init(red: 217/255.0, green: 217/255.0, blue: 217/255.0, alpha: 1.0)
                     checkBillingBtn.isEnabled = false
-                    checkBillingStatusLabel.text = kCheckBillingStatus_NO
+//                    checkBillingStatusLabel.text = kCheckBillingStatus_NO
                     checkBillingBtn.setTitle(kCheckBillingStatus_NO, for: .normal)
                 }
             } else if DRIVER_PAY() == "未交付" {
@@ -612,8 +611,12 @@ class OrderDetailViewController: UIViewController, HttpResponseProtocol, UITable
                 //通过地址转成坐标
                 getGeoCode()
                 
-                checkBillingStatusLabel.text = kCheckBillingStatus_NO
+//                checkBillingStatusLabel.text = kCheckBillingStatus_NO
             }
+            
+            self.tableViewHeight.constant = (biz.order?.tableViewHeight)!
+            // 文字 + tableView + 按钮 + 按钮距下
+            self.scrollContentViewHeight.constant = self.orderDetailsTableView.frame.origin.y + (biz.order?.tableViewHeight)! + 30 + 20
         }
         print("=========responseSuccess3")
     }
@@ -641,7 +644,9 @@ class OrderDetailViewController: UIViewController, HttpResponseProtocol, UITable
     
     /// 设置 cell 高度
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        
+        let m = biz.order?.OrderDetails[indexPath.row]
+        return m!.cellHeight
     }
     
     /// 设置自定义的 cell

@@ -32,6 +32,8 @@ class OrderDetail: BaseBean {
     
     var PRODUCT_TYPE: String = ""
     
+    var cellHeight: CGFloat! = 0
+    
     override func mapping(map: Map) {
         PRODUCT_NO <- map["PRODUCT_NO"]
         PRODUCT_NAME <- map["PRODUCT_NAME"]

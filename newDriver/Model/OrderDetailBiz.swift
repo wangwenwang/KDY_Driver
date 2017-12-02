@@ -89,12 +89,15 @@ class OrderDetailBiz {
                                     if type == "1" {
                                         let str = json["result"][0]["order"].description
                                         if let or = Mapper<Order>().map(JSONString: str) {
-                                            wkSelf.order = or
-                                            let orderDetailArray = json["result"][0]["order"]["OrderDetails"].arrayValue
-                                            or.OrderDetails = []
-                                            for detail in orderDetailArray {
-                                                or.OrderDetails.append(Mapper<OrderDetail>().map(JSONString: detail.description)!)
+                                            for item in or.OrderDetails {
+                                                let productName: String! = "\(item.PRODUCT_NAME)(\(item.PRODUCT_NO))"
+                                                let oneLine = Tools.getHeightOfString(text: "fds", fontSize: 14, width: CGFloat(MAXFLOAT))
+                                                let mulLine = Tools.getHeightOfString(text: productName, fontSize: 14, width: (SCREEN_WIDTH - (8 + 12 + 3 + 8)))
+                                                item.cellHeight = 52 + (mulLine - oneLine)
+                                                or.tableViewHeight = (or.tableViewHeight)! + item.cellHeight
                                             }
+                                            wkSelf.order = or
+                                            
                                             responseProtocol.responseSuccess()
                                         } else {
                                             responseProtocol.responseError("订单物流信息异常！")

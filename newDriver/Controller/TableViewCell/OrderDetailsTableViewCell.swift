@@ -49,18 +49,18 @@ class OrderDetailsTableViewCell: UITableViewCell {
     
         productNameField.sizeToFit()
         let screenWidth : CGFloat = UIScreen.main.bounds.width
-        //溢出宽度
-        let overflowWidth : CGFloat = productNameField.frame.size.width - (screenWidth - 16 - 20)
-        if(overflowWidth > 0) {
-            UIView.beginAnimations("textAnimation", context: nil)
-            UIView.setAnimationDuration(TimeInterval(overflowWidth) / 6.0)
-            UIView.setAnimationCurve(UIViewAnimationCurve.linear)
-            UIView.setAnimationDelegate(self)
-            UIView.setAnimationRepeatAutoreverses(true)
-            UIView.setAnimationRepeatCount(999999)
-            productNameField.frame.origin.x = overflowWidth
-            UIView.commitAnimations()
-        }
+//        //溢出宽度
+//        let overflowWidth : CGFloat = productNameField.frame.size.width - (screenWidth - 16 - 20)
+//        if(overflowWidth > 0) {
+//            UIView.beginAnimations("textAnimation", context: nil)
+//            UIView.setAnimationDuration(TimeInterval(overflowWidth) / 6.0)
+//            UIView.setAnimationCurve(UIViewAnimationCurve.linear)
+//            UIView.setAnimationDelegate(self)
+//            UIView.setAnimationRepeatAutoreverses(true)
+//            UIView.setAnimationRepeatCount(999999)
+//            productNameField.frame.origin.x = overflowWidth
+//            UIView.commitAnimations()
+//        }
     }
     
 }

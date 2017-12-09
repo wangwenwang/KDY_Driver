@@ -148,7 +148,7 @@ class DriverListPayViewController: UIViewController, HttpResponseProtocol, UITab
         for order:Order in biz.orders {
             
             let oneLine = Tools.getHeightOfString(text: "fds", fontSize: 14, width: CGFloat(MAXFLOAT))
-            var mulLine = Tools.getHeightOfString(text: order.ORD_TO_ADDRESS, fontSize: 14, width: (SCREEN_WIDTH - 8 - 65 - 3))
+            var mulLine = Tools.getHeightOfString(text: order.ORD_TO_NAME, fontSize: 14, width: (SCREEN_WIDTH - 8 - 65 - 3))
             order.cellHeight = kCellHeight + (mulLine - oneLine)
            
             mulLine = Tools.getHeightOfString(text: order.ORD_TO_ADDRESS, fontSize: 14, width: (SCREEN_WIDTH - 8 - 65 - 3))

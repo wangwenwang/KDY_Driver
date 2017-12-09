@@ -507,11 +507,6 @@
                 <constraint firstItem="Czn-6n-5iU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="zbF-B7-cEk"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <variation key="default">
-                <mask key="subviews">
-                    <exclude reference="0H7-Pn-OR5"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="1054" y="297.5"/>
         </view>
     </objects>

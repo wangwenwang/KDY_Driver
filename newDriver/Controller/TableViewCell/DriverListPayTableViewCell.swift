@@ -16,7 +16,10 @@ class DriverListPayTableViewCell: UITableViewCell {
     // 客户单号
     @IBOutlet weak var ORD_NO_CLIENT: UILabel!
     
-    // 地址
+    // 到达名称
+    @IBOutlet weak var ORD_TO_NAME: UILabel!
+    
+    // 到达地址
     @IBOutlet weak var ORD_TO_ADDRESS: UILabel!
     
     // 勾选图片
@@ -45,6 +48,7 @@ class DriverListPayTableViewCell: UITableViewCell {
             
             ORD_NO.text = order.ORD_NO;
             ORD_NO_CLIENT.text = order.ORD_NO_CLIENT;
+            ORD_TO_NAME.text = order.ORD_TO_NAME;
             ORD_TO_ADDRESS.text = order.ORD_TO_ADDRESS;
             selectedImageView.image = UIImage.init(named: order.cellSelected ? "selected" : "unselect")
         }

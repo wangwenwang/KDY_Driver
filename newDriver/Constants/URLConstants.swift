@@ -44,17 +44,17 @@ struct URLConstants {
     static let getOrderLoacations = URLConstants.baseUrl + "GetLocaltion"
     
     
-    #if DEBUG
-    
-    /// 单点上传位置信息
-    static let updataLocation = URLConstants.baseUrl + "CurrentLocaltion1"
-    
-    /// 上传位置点集合信息
-    static let updataLocations = URLConstants.baseUrl + "CurrentLocaltionList1"
-    
-    /// 上传token
-    static let uploadToken = URLConstants.baseUrl + "SavaPushToken1"
-    #else
+//    #if DEBUG
+//
+//    /// 单点上传位置信息
+//    static let updataLocation = URLConstants.baseUrl + "CurrentLocaltion1"
+//
+//    /// 上传位置点集合信息
+//    static let updataLocations = URLConstants.baseUrl + "CurrentLocaltionList1"
+//
+//    /// 上传token
+//    static let uploadToken = URLConstants.baseUrl + "SavaPushToken1"
+//    #else
     
     /// 单点上传位置信息
     static let updataLocation = URLConstants.baseUrl + "CurrentLocaltion"
@@ -64,7 +64,7 @@ struct URLConstants {
     
     /// 上传token
     static let uploadToken = URLConstants.baseUrl + "SavaPushToken"
-    #endif
+//    #endif
     
     /// 获取推送订单或公告
     static let getPushMessage = URLConstants.baseUrl + "GetMessage"

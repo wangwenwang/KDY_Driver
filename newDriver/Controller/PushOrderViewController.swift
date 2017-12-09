@@ -16,23 +16,34 @@ class PushOrderViewController: UIViewController, UITableViewDelegate, UITableVie
     
     // MARK: - 生命周期
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
         myTableView.delegate = self
         myTableView.dataSource = self
         
         self.automaticallyAdjustsScrollViewInsets = false
         self.myTableView.register(UINib.init(nibName: "PushOrderTableViewCell", bundle: nil), forCellReuseIdentifier: "PushOrderTableViewCell")
-        self.myTableView.rowHeight = 60
+        
+        for m in SHIPMENT_List {
+            let oneLine = Tools.getHeightOfString(text: "fds", fontSize: 14, width: CGFloat(MAXFLOAT))
+            let mulLine = Tools.getHeightOfString(text: m.ORD_TO_NAME, fontSize: 14, width: (SCREEN_WIDTH - (12 + 65 + 3)))
+            m.cellHeight = 79 + (mulLine - oneLine)
+        }
     }
     
     override func didReceiveMemoryWarning() {
+        
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // MARK: - UITableViewDelegate
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        let m = SHIPMENT_List[indexPath.row]
+        return m.cellHeight
+    }
+    
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return SHIPMENT_List.count
@@ -45,6 +56,7 @@ class PushOrderViewController: UIViewController, UITableViewDelegate, UITableVie
         let cell = tableView.dequeueReusableCell(withIdentifier: "PushOrderTableViewCell", for: indexPath) as! PushOrderTableViewCell
         cell.titleLabel.text = pushOrderSimple.ORD_NO
         cell.ORD_NO_CLIENT.text = pushOrderSimple.ORD_NO_CLIENT
+        cell.ORD_TO_NAME.text = pushOrderSimple.ORD_TO_NAME
         
         return cell
     }

@@ -21,7 +21,7 @@ class DriverListPayViewController: UIViewController, HttpResponseProtocol, UITab
     // 订单简介Cell
     let cellIdentifier = "DriverListPayTableViewCell"
     
-    let cellHeight: CGFloat = 72
+    let kCellHeight: CGFloat = 95
     
     
     override func viewDidLoad() {
@@ -140,6 +140,7 @@ class DriverListPayViewController: UIViewController, HttpResponseProtocol, UITab
     }
     
     
+    // MARK: - HttpResponseProtocol
     func responseSuccess() {
         
         _ = MBProgressHUD.hideHUDForView(self.view, animated: true)
@@ -147,20 +148,13 @@ class DriverListPayViewController: UIViewController, HttpResponseProtocol, UITab
         for order:Order in biz.orders {
             
             let oneLine = Tools.getHeightOfString(text: "fds", fontSize: 14, width: CGFloat(MAXFLOAT))
-            let mulLine = Tools.getHeightOfString(text: order.ORD_TO_ADDRESS, fontSize: 14, width: (SCREEN_WIDTH - 8 - 65 - 3))
-            let overHeight = mulLine - oneLine
-            if(overHeight > 0) {
-                
-                order.cellHeight = cellHeight + overHeight
-            } else {
-                
-                order.cellHeight = cellHeight
-            }
+            var mulLine = Tools.getHeightOfString(text: order.ORD_TO_ADDRESS, fontSize: 14, width: (SCREEN_WIDTH - 8 - 65 - 3))
+            order.cellHeight = kCellHeight + (mulLine - oneLine)
+           
+            mulLine = Tools.getHeightOfString(text: order.ORD_TO_ADDRESS, fontSize: 14, width: (SCREEN_WIDTH - 8 - 65 - 3))
+            order.cellHeight += (mulLine - oneLine)
         }
-        
         tableView.reloadData()
-        
-        print("i m responseSuccess")
     }
     
     
@@ -172,7 +166,6 @@ class DriverListPayViewController: UIViewController, HttpResponseProtocol, UITab
     func responseError(_ error: String) {
         
         _ = MBProgressHUD.hideHUDForView(self.view, animated: true)
-        
         Tools.showAlertDialog(error, self)
     }
 }

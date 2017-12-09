@@ -13,6 +13,7 @@ class PushOrderTableViewCell: UITableViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ORD_NO_CLIENT: UILabel!
+    @IBOutlet weak var ORD_TO_NAME: UILabel!
     
     
     override func awakeFromNib() {

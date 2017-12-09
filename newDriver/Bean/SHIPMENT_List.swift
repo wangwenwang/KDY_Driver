@@ -20,9 +20,15 @@ class SHIPMENT_List: BaseBean {
     /// 客户订单号
     var ORD_NO_CLIENT: String = ""
     
+    /// 到达点名称
+    var ORD_TO_NAME: String = ""
+    
+    var cellHeight: CGFloat = 0
+    
     override func mapping(map: Map) {
         ORD_NO <- map["ORD_NO"]
         ORD_IDX <- map["ORD_IDX"]
         ORD_NO_CLIENT <- map["ORD_NO_CLIENT"]
+        ORD_TO_NAME <- map["ORD_TO_NAME"]
     }
 }

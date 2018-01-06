@@ -8,4 +8,5 @@ target 'newDriver' do
 #    pod 'Networking'
 #    pod 'GTSDK', '1.5.3-noidfa'
     pod 'GTSDK', '1.6.2.0-noidfa'
+    pod “BaiduMapKit” #百度地图SDK
 end

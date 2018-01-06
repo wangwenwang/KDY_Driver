@@ -77,9 +77,9 @@ class MainViewController: UIViewController, HttpResponseProtocol, BMKMapViewDele
         
         print("mainViewController.viewDidAppear")
         
-        if(CLLocationManager.authorizationStatus() != .denied) {
+        if(CLLocationManager.authorizationStatus() != .authorizedAlways) {
             print("应用拥有定位权限")
-        }else {
+        } else {
             let infoDictionary = Bundle.main.infoDictionary
             let appDisplayName: AnyObject? = infoDictionary!["CFBundleDisplayName"] as AnyObject?
             let aleat = UIAlertController(title: "打开定位开关", message:"请打开系统设置中\"隐私->定位服务\",允许\(appDisplayName as! String)使用定位服务", preferredStyle: .alert)
@@ -95,7 +95,6 @@ class MainViewController: UIViewController, HttpResponseProtocol, BMKMapViewDele
             aleat.addAction(callAction)
             self.present(aleat, animated: true, completion: nil)
         }
-        
     }
     
     

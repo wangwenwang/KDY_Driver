@@ -77,12 +77,13 @@ class MainViewController: UIViewController, HttpResponseProtocol, BMKMapViewDele
         
         print("mainViewController.viewDidAppear")
         
-        if(CLLocationManager.authorizationStatus() != .authorizedAlways) {
-            print("应用拥有定位权限")
+        if(CLLocationManager.authorizationStatus() == .authorizedAlways) {
+            print("应用拥有永久定位权限")
+            print(CLLocationManager.authorizationStatus())
         } else {
             let infoDictionary = Bundle.main.infoDictionary
             let appDisplayName: AnyObject? = infoDictionary!["CFBundleDisplayName"] as AnyObject?
-            let aleat = UIAlertController(title: "打开定位开关", message:"请打开系统设置中\"隐私->定位服务\",允许\(appDisplayName as! String)使用定位服务", preferredStyle: .alert)
+            let aleat = UIAlertController(title: "打开定位开关", message:"请打开系统设置中\"隐私->定位服务->始终\",允许\(appDisplayName as! String)使用定位服务", preferredStyle: .alert)
             let tempAction = UIAlertAction(title: "取消", style: .cancel) { (action) in
             }
             let callAction = UIAlertAction(title: "立即设置", style: .default) { (action) in

@@ -71,6 +71,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HttpResponsePr
     /// 上传token
     fileprivate var bizToken = AppDelegateBiz()
     
+    var _reqAuth: CLLocationManager! = nil
+    
     /// 用户点击登陆按钮，登陆
     @IBAction func login(_ sender: UIButton) {
         login()
@@ -187,21 +189,40 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HttpResponsePr
     
     
     fileprivate func startLocationService () {
-        // 初始化BMKLocationService
-        localService = BMKLocationService()
-        // 启动LocationService
-        localService.startUserLocationService()
-        // 设置定位精度
-        localService.desiredAccuracy = kCLLocationAccuracyHundredMeters
-        // 指定最小距离更新(米)，默认：kCLDistanceFilterNone
-        localService.distanceFilter = 500
-        // 指定最小更新角度
-        localService.headingFilter = 270
-        localService.delegate = self
+        
+        // 弹出定位授权窗口
+        _reqAuth = CLLocationManager()
+        _reqAuth.delegate = self as? CLLocationManagerDelegate
+        _reqAuth.distanceFilter = 100
+        _reqAuth.pausesLocationUpdatesAutomatically = false
         if #available(iOS 9.0, *) {
-            localService.allowsBackgroundLocationUpdates = true
+            _reqAuth.allowsBackgroundLocationUpdates = true
         }
-        localService.pausesLocationUpdatesAutomatically = false
+        _reqAuth.requestAlwaysAuthorization()
+        _reqAuth.startUpdatingLocation()
+        
+        DispatchQueue.global().async {
+
+            sleep(2)
+            DispatchQueue.main.async {
+
+                // 初始化BMKLocationService
+                self.localService = BMKLocationService()
+                // 启动LocationService
+                self.localService.startUserLocationService()
+                // 设置定位精度
+                self.localService.desiredAccuracy = kCLLocationAccuracyHundredMeters
+                // 指定最小距离更新(米)，默认：kCLDistanceFilterNone
+                self.localService.distanceFilter = 500
+                // 指定最小更新角度
+                self.localService.headingFilter = 270
+                self.localService.delegate = self
+                if #available(iOS 9.0, *) {
+                    self.localService.allowsBackgroundLocationUpdates = true
+                }
+                self.localService.pausesLocationUpdatesAutomatically = false
+            }
+        }
     }
     
     

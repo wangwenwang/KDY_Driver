@@ -56,7 +56,7 @@ class NetWorkBaseBiz: NSObject {
         let url = URL(string: path)
         var request = URLRequest.init(url: url!)
         request.httpMethod = "POST"
-        request.timeoutInterval = 30
+        request.timeoutInterval = 90
 //        print(address)
         request.httpBody = address.data(using: .utf8)
         let session = URLSession.shared

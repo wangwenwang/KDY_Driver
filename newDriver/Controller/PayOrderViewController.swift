@@ -11,10 +11,29 @@ import MobileCoreServices
 
 class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, HttpResponseProtocol, UIActionSheetDelegate, BMKGeoCodeSearchDelegate {
     
+    // 状态栏高度
+    let kStatusHeight = UIApplication.shared.statusBarFrame.size.height
+    
+    // 导航栏高度
+    func kNavHeight() -> CGFloat {
+        
+        if((self.navigationController) != nil) {
+            return self.navigationController!.navigationBar.frame.size.height
+        } else {
+            return 0
+        }
+    }
+    
+    // 底部宏
+    let kSafeAreaBottomHeight = CGFloat(SCREEN_HEIGH == 812.0 ? 34 : 0)
+    
+    // 键盘高度
+    var KeyboardHeight : CGFloat = 0
+    
     var pickerController : UIImagePickerController? = nil;
     
     /// 取消、提交这两个按钮离底部的距离
-    let buttomViewToButtom : CGFloat = 10;
+    let buttomViewToButtom : CGFloat = 10
     
     /// 订单的 idx
     var orderIDX: String = ""
@@ -147,11 +166,18 @@ class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePick
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         self.title = "订单交付"
         
-        // 创建相册
-        createData()
+        NSLog("viewDidLoad0")
+        
+//        DispatchQueue.global().async {
+            // 创建相册
+            self.createData()
+//        }
+        
+        NSLog("viewDidLoad1")
         
         dismissProgress()
         
@@ -163,11 +189,20 @@ class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePick
         picture2Field.addObserver(self, forKeyPath: "image", options: .new, context: &picture2FieldContext)
         
         geo()
+        
+        NSLog("viewDidLoad2")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        super.viewDidAppear(animated)
+        NSLog("viewDidAppear1")
     }
     
     override func updateViewConstraints() {
         super.updateViewConstraints()
-        scrollContentViewHeight.constant = UIScreen.main.bounds.height - 64 - buttomViewToButtom
+        
+        scrollContentViewHeight.constant = SCREEN_HEIGH - kStatusHeight - kNavHeight() - buttomViewToButtom - kSafeAreaBottomHeight - KeyboardHeight
     }
     
     deinit {
@@ -178,18 +213,18 @@ class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePick
     }
     
     // MARK: - 私有方法
-    /// 追加键盘监听
+    // 追加键盘监听
     fileprivate func addNotification () {
         NotificationCenter.default.addObserver(self, selector: #selector(PayOrderViewController.keyboardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(PayOrderViewController.keyboardWillHide(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    /// 删除键盘监听
+    // 删除键盘监听
     fileprivate func removeNotification () {
         NotificationCenter.default.removeObserver(self)
     }
     
-    /// 添加底部取消和提交订单按钮
+    // 添加底部取消和提交订单按钮
     fileprivate func addCancelAndPayOrderButton () {
         let superViewHeight = bottomButtonContioner.frame.height
         let superViewWidth = (self.navigationController?.navigationBar.frame.width)! - 16
@@ -214,12 +249,12 @@ class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePick
     }
     
     // MARK: - 点击事件
-    /// 取消交付，返回到物流信息场景
+    // 取消交付，返回到物流信息场景
     @IBAction func cancelPayOrder(_ sender: UIButton) {
         _ = self.navigationController?.popViewController(animated: true)
     }
     
-    /// 提交订单
+    // 提交订单
     @IBAction func payOrder(_ sender: UIButton) {
         //        showProgress()
         //        dispatch_async(dispatch_get_global_queue(0, 0)) {
@@ -414,26 +449,26 @@ class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePick
         let keyBoaryHeight : CGFloat = 252.0
         textCoverView.isHidden = false
         
-        let offset : CGFloat = keyBoaryHeight - (UIScreen.main.bounds.height - 64 - remarkOrderNoLabel.frame.maxY)
+        KeyboardHeight = keyBoaryHeight - (SCREEN_HEIGH - kStatusHeight - kNavHeight() - remarkOrderNoLabel.frame.maxY)
         
-        if(offset > 0) {
+        if(KeyboardHeight > 0) {
             
-            //准备动画
+            // 准备动画
             //                        let animationDuration : NSTimeInterval = 0.25
             //                        UIView.beginAnimations("ResizeForKeyboard", context: nil)
             //                        UIView.setAnimationDuration(animationDuration)
             
             //动作
-            buttomHeight.constant = buttomViewToButtom + offset
-            scrollContentViewHeight.constant = UIScreen.main.bounds.height - 64 + offset
+            buttomHeight.constant = buttomViewToButtom + KeyboardHeight
+            self.updateViewConstraints()
             
-            //开启动画
+            // 开启动画
             _ = [UIView.commitAnimations]
             self.view.layoutIfNeeded()
             
-            //滑到顶部
+            // 滑到顶部
             let orgY : CGFloat = myScrollView.contentOffset.y
-            myScrollView.setContentOffset(CGPoint(x: 0, y: orgY + offset + 3), animated: true)
+            myScrollView.setContentOffset(CGPoint(x: 0, y: orgY + KeyboardHeight + 3), animated: true)
         }
     }
     
@@ -441,6 +476,7 @@ class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePick
     func keyboardWillHide(_ notification: Notification) {
         
         textCoverView.isHidden = true
+        KeyboardHeight = 0
         
         //准备动画
         //                let animationDuration : NSTimeInterval = 0.25
@@ -449,7 +485,7 @@ class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePick
         
         //动作
         buttomHeight.constant = 0
-        scrollContentViewHeight.constant = UIScreen.main.bounds.height - 64 - buttomViewToButtom
+        self.updateViewConstraints()
         
         //开启动画
         _ = [UIView.commitAnimations]
@@ -562,7 +598,6 @@ class PayOrderViewController: UIViewController, UIAlertViewDelegate, UIImagePick
         pickerController = UIImagePickerController()
         pickerController?.view.backgroundColor = UIColor.groupTableViewBackground
         pickerController?.delegate = self
-        //        pickerController?.allowsEditing = true
     }
     
     

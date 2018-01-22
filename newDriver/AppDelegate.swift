@@ -81,10 +81,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BMKGeneralDelegate, GeTui
         // 注册APNs - custom method - 开发者自定义的方法
         self.registerRemoteNotification()
         
-        
-        //去掉返回按钮得字
-        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -60), for: .default)
-//        UIBarButtonItem.appearance().setBackgroundImage(getImageWithColor(color: UIColor.white), for: .normal, barMetrics: UIBarMetrics.init(rawValue: 1)!)
+        // 去掉返回按钮得字
+        // UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -60), for: .default)   iOS11下有向下偏移bug
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.clear], for: .normal)
         
         return true
     }

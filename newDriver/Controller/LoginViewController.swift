@@ -122,19 +122,23 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HttpResponsePr
         self.navigationController?.navigationBar.tintColor = UIColor.orange
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.orange]
         
-        
         geocodeSearch = BMKGeoCodeSearch()
         geocodeSearch.delegate = self
         
-        
         dismissLoginField()
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         title = "登陆"
+        if localTimer != nil {
+            localTimer.invalidate()
+            print("关闭定时上传位置点信息计时器")
+        }
+        
+        if let pwd = UserDefaults.standard.value(forKey: BusinessConstants.passWord) as? String {
+            password.text = pwd
+        }
     }
     
     

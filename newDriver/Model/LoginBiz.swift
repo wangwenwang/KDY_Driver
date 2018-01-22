@@ -118,6 +118,7 @@ class LoginBiz {
     fileprivate func saveUserNameAndPasswordInLocal (userName name: String, passWord pwd: String) {
         UserDefaults.standard.set(name, forKey: BusinessConstants.userName)
         UserDefaults.standard.set(pwd, forKey: BusinessConstants.passWord)
+        UserDefaults.standard.synchronize()
     }
     
     

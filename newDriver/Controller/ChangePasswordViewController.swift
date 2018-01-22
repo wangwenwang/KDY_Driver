@@ -47,39 +47,56 @@ class ChangePasswordViewController: UIViewController, HttpResponseProtocol, UITe
     /// 网络请求时显示的文本框
     @IBOutlet weak var progressfiels: UILabel!
     
+    @IBOutlet weak var oldPassTop: NSLayoutConstraint!
+    
+    // 状态栏高度
+    let kStatusHeight = UIApplication.shared.statusBarFrame.size.height
+    
+    // 导航栏高度
+    func kNavHeight() -> CGFloat {
+        
+        return self.navigationController!.navigationBar.frame.size.height
+    }
+    
     /// 提交修改密码
     @IBAction func changePassword(_ sender: UIButton) {
         
-        if let oldpwd = oldPasswordField.text {
-            
-            if let newpwd = newPasswordField.text {
-                
-                if let repwd = repeatPasswordField.text {
-                    
-                    if newpwd.characters.count < 6 || repwd.characters.count < 6 {
-                        
-                        Tools.showAlertDialog("新密码不能小于六位数字或字母！", self)
-                    } else {
-                        
-                        if newpwd == repwd {
-                            
-                            changePasswordButtonField.isEnabled = false
-                            editTextField?.resignFirstResponder()
-                            showProgress()
-                            
-                            //判断连接状态
-                            let reachability = Reachability.forInternetConnection()
-                            if reachability!.isReachable(){
-                                biz.changePassword(oldPassword: oldpwd, newPassword: newpwd, httpresponseProtocol: self)
+        let oldpwd: String = oldPasswordField.text!
+        let newpwd: String = newPasswordField.text!
+        let repwd: String = repeatPasswordField.text!
+        
+        if(oldpwd != "") {
+            if(newpwd != "") {
+                if(repwd != "") {
+                    if(newpwd == repwd) {
+                        if(newpwd.count >= 6) {
+                            if(oldpwd == UserDefaults.standard.string(forKey: BusinessConstants.passWord)) {
+                                if(oldpwd != repwd) {
+                                    
+                                    //判断连接状态
+                                    let reachability = Reachability.forInternetConnection()
+                                    if reachability!.isReachable() {
+                                        changePasswordButtonField.isEnabled = false
+                                        editTextField?.resignFirstResponder()
+                                        showProgress()
+                                        biz.changePassword(oldPassword: oldpwd, newPassword: newpwd, httpresponseProtocol: self)
+                                    } else {
+                                        Tools.showAlertDialog("网络连接不可用!", self)
+                                    }
+                                } else {
+                                    Tools.showAlertDialog("新密码与旧密码相同!", self)
+                                }
                             } else {
-                                self.responseError("网络连接不可用!")
+                                Tools.showAlertDialog("旧密码不正确!", self)
                             }
                         } else {
-                            Tools.showAlertDialog("两次输入新密码不同！", self)
+                            Tools.showAlertDialog("新密码不能小于六位数字或字母！", self)
                         }
+                    } else {
+                        Tools.showAlertDialog("两次输入新密码不同！", self)
                     }
                 } else {
-                    Tools.showAlertDialog("请再次输入新密码确认！", self)
+                    Tools.showAlertDialog("请确认新密码！", self)
                 }
             } else {
                 Tools.showAlertDialog("请输入新密码！", self)
@@ -99,14 +116,31 @@ class ChangePasswordViewController: UIViewController, HttpResponseProtocol, UITe
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "修改密码"
+        oldPassTop.constant += (kStatusHeight + kNavHeight())
         dismissProgress()
     }
     
-    /// 修改登陆密码成功回调
+    // 修改登陆密码成功回调
     func responseSuccess() {
-        Tools.showAlertDialog("修改密码成功！", self)
         changePasswordButtonField.isEnabled = true
         dismissProgress()
+        
+        let hud: MBProgressHUD = MBProgressHUD.showHUDAddedTo(UIApplication.shared.keyWindow!, animated: true)
+        hud.mode = .text
+        hud.labelText = "修改密码成功！"
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
+        hud.hide(true, afterDelay: 3)
+        
+        // 清空密码，返回登录界面
+        UserDefaults.standard.set("", forKey: BusinessConstants.passWord)
+        UserDefaults.standard.synchronize()
+        DispatchQueue.global().async {
+            sleep(1)
+            DispatchQueue.main.async {
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
     }
     
     /**
@@ -139,13 +173,13 @@ class ChangePasswordViewController: UIViewController, HttpResponseProtocol, UITe
         return true
     }
     
-    /// 显示修改密码网络请求时显示的进度
+    // 显示修改密码网络请求时显示的进度
     fileprivate func showProgress () {
         progress.startAnimating()
         progressfiels.text = "修改密码中。。。"
     }
     
-    /// 隐藏修改密码网络请求时显示的进度
+    // 隐藏修改密码网络请求时显示的进度
     fileprivate func dismissProgress () {
         progress.stopAnimating()
         progressfiels.text = ""

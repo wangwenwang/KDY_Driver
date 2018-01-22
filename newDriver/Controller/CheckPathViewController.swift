@@ -11,43 +11,45 @@ import MapKit
 
 
 class CheckPathViewController: UIViewController, BMKMapViewDelegate, BMKRouteSearchDelegate, HttpResponseProtocol {
-    
-    
-    /// 订单状态，用来确定显示的“途中”或“终点”图标。（默认终点）
-    var driver_pay : Int = 1;
+
     
     /// 用户的 idx
     var orderIDX: String = ""
     
-    /// 查看订单线路业务类
+    // 底部宏
+    let kSafeAreaBottomHeight = CGFloat(SCREEN_HEIGH == 812.0 ? 20 : 0)
+    
+    // label 距下
+    @IBOutlet weak var labelBottom: NSLayoutConstraint!
+    
+    // 订单状态，用来确定显示的“途中”或“终点”图标。（默认终点）
+    var driver_pay : Int = 1;
+    
+    // 查看订单线路业务类
     fileprivate var biz = CheckPathBiz()
     
-    /// 订单线路长度
+    // 订单线路长度
     fileprivate var orderPathDistance: Int32 = 0
     
-    /// 已经规划完路线的位置点
+    // 已经规划完路线的位置点
     fileprivate var startSearchPoint: Int = 0
     
-    /// 已经规划完路线的位置点
+    // 已经规划完路线的位置点
     fileprivate var startSearchPoint1: Int = 0
     
-    /// 是否是让地图缩放到包含线路
+    // 是否是让地图缩放到包含线路
     fileprivate var isJustFitMapWithPolyLine: Bool = true
     
-    /// 百度地图查询路线
+    // 百度地图查询路线
     var routeSearch: BMKRouteSearch!
     
-    /// 路线长度
-    @IBOutlet weak var pathDistanceField: UILabel! {
-        didSet {
-            //            pathDistanceField.alpha = 0.0
-        }
-    }
+    // 路线长度
+    @IBOutlet weak var pathDistanceField: UILabel!
     
-    /// 百度地图控件
+    // 百度地图控件
     @IBOutlet weak var mapViwe: MyBMKMapView!
     
-    /// 加载数据和线路时显示的控件
+    // 加载数据和线路时显示的控件
     @IBOutlet weak var progressField: UIView!
     @IBOutlet weak var progress: UIActivityIndicatorView! {
         didSet {
@@ -60,14 +62,13 @@ class CheckPathViewController: UIViewController, BMKMapViewDelegate, BMKRouteSea
     
     
     // MARK: 生命周期
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "查看路线"
         mapViwe.zoomLevel = 15
+        labelBottom.constant = kSafeAreaBottomHeight
         routeSearch = BMKRouteSearch()
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -411,34 +412,34 @@ class CheckPathViewController: UIViewController, BMKMapViewDelegate, BMKRouteSea
         let width = image.cgImage?.width
         let height = image.cgImage?.height
         let rotatedSize = CGSize(width: width!, height: height!)
-        UIGraphicsBeginImageContext(rotatedSize);
-        let bitmap = UIGraphicsGetCurrentContext();
+        UIGraphicsBeginImageContext(rotatedSize)
+        let bitmap = UIGraphicsGetCurrentContext()
         bitmap?.translateBy(x: rotatedSize.width/2, y: rotatedSize.height/2);
-        bitmap?.rotate(by: CGFloat(Double(degrees) * M_PI / 180.0));
-        bitmap?.rotate(by: CGFloat(M_PI));
+        bitmap?.rotate(by: CGFloat(Double(degrees) * .pi / 180.0));
+        bitmap?.rotate(by: .pi)
         bitmap?.scaleBy(x: -1.0, y: 1.0);
-        bitmap?.draw(image.cgImage!, in: CGRect(x: -rotatedSize.width/2, y: -rotatedSize.height/2, width: rotatedSize.width, height: rotatedSize.height));
-        let newImage = UIGraphicsGetImageFromCurrentImageContext();
+        bitmap?.draw(image.cgImage!, in: CGRect(x: -rotatedSize.width/2, y: -rotatedSize.height/2, width: rotatedSize.width, height: rotatedSize.height))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext();
-        return newImage!;
+        return newImage!
     }
     
-    /// 显示获取订单线路位置集合和规划线路时显示的进度
+    // 显示获取订单线路位置集合和规划线路时显示的进度
     fileprivate func showProgress () {
         progress.startAnimating()
         progressField.alpha = 1.0
     }
     
-    /// 隐藏获取订单线路位置集合和规划线路时显示的进度
+    // 隐藏获取订单线路位置集合和规划线路时显示的进度
     fileprivate func dismissProgress () {
         progress.stopAnimating()
         progressField.alpha = 0.0
     }
     
-    
+
     // MARK: HttpResponseProtocol回调
     
-    /// 获取订单线路位置集合成功
+    // 获取订单线路位置集合成功
     func responseSuccess() {
         let points = biz.orderLocations
         

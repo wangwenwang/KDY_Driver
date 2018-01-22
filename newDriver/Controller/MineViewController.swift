@@ -11,29 +11,23 @@ import UIKit
 class MineViewController: UIViewController, HttpResponseProtocol, UIAlertViewDelegate {
     
     
-    /// 获取 app 版本信息业务类
+    // 获取 app 版本信息业务类
     let checkVersionBiz = CheckVersionBiz()
     
-//    /// 提示信息对话框
-//    fileprivate var alertController = UIAlertView()
-//    
-//    /// 提示用户升级对话框
-//    fileprivate var updateAppVersionAlert = UIAlertView()
-    
-    /// 用户姓名
+    // 用户姓名
     @IBOutlet weak var userNameField: UILabel!
     
-    /// 用户角色
+    // 用户角色
     @IBOutlet weak var userTypeField: UILabel!
     
-    /// 版本号
+    // 版本号
     @IBOutlet weak var versionField: UILabel! {
         didSet {
             versionField.text = appUtils.getAppVersion()
         }
     }
     
-    /// 跳转到修改密码界面
+    // 跳转到修改密码界面
     @IBAction func skipToChangePassword(_ sender: UIButton) {
         self.navigationController?.pushViewController(ChangePasswordViewController(nibName: "ChangePasswordViewController", bundle: nil), animated: true)
     }
@@ -58,10 +52,10 @@ class MineViewController: UIViewController, HttpResponseProtocol, UIAlertViewDel
         self.dismiss(animated: true, completion: nil)
     }
     
-    /// 检查版本更新按钮
+    // 检查版本更新按钮
     @IBOutlet weak var checkVersionField: UIButton!
     
-    /// 检查版本更新
+    // 检查版本更新
     @IBAction func checkVersion(_ sender: UIButton) {
         checkVersionField.isEnabled = false
         //判断连接状态
@@ -74,7 +68,7 @@ class MineViewController: UIViewController, HttpResponseProtocol, UIAlertViewDel
         }
     }
     
-    /// 跳转到关于界面
+    // 跳转到关于界面
     @IBAction func about(_ sender: UIButton) {
         self.navigationController?.pushViewController(AboutViewController(nibName: "AboutViewController", bundle: nil), animated: true)
     }
@@ -133,21 +127,3 @@ class MineViewController: UIViewController, HttpResponseProtocol, UIAlertViewDel
 //    }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

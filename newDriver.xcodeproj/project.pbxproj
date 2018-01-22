@@ -33,6 +33,7 @@
 		302B0F0B1E02386500AC2FEC /* PushOrderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 302B0F091E02386500AC2FEC /* PushOrderTableViewCell.xib */; };
 		303548781F41B85F004AE98B /* UIViewController+BackButtonHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303548771F41B85F004AE98B /* UIViewController+BackButtonHandler.swift */; };
 		3035D5101E07AB80008B073A /* UITableView+NoDataPrompt.m in Sources */ = {isa = PBXBuildFile; fileRef = 3035D50F1E07AB80008B073A /* UITableView+NoDataPrompt.m */; };
+		3043326C200F397800C31605 /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3043326B200F397800C31605 /* GlobalConstants.swift */; };
 		304DD5181D1E0D930073879C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304DD5171D1E0D930073879C /* AppDelegate.swift */; };
 		304DD51D1D1E0D930073879C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 304DD51B1D1E0D930073879C /* Main.storyboard */; };
 		304DD51F1D1E0D930073879C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 304DD51E1D1E0D930073879C /* Assets.xcassets */; };
@@ -194,6 +195,7 @@
 		303548771F41B85F004AE98B /* UIViewController+BackButtonHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+BackButtonHandler.swift"; sourceTree = "<group>"; };
 		3035D50E1E07AB80008B073A /* UITableView+NoDataPrompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+NoDataPrompt.h"; sourceTree = "<group>"; };
 		3035D50F1E07AB80008B073A /* UITableView+NoDataPrompt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+NoDataPrompt.m"; sourceTree = "<group>"; };
+		3043326B200F397800C31605 /* GlobalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
 		304DD5141D1E0D930073879C /* newDriver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = newDriver.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		304DD5171D1E0D930073879C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		304DD51C1D1E0D930073879C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -448,7 +450,9 @@
 		3074A0C11DF7B3B6008DC76F /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				3074A0CE1DF7B3B6008DC76F /* LoginViewController.swift */,
 				3074A0CF1DF7B3B6008DC76F /* MainViewController.swift */,
+				3074A0D01DF7B3B6008DC76F /* MineViewController.swift */,
 				3074A0C21DF7B3B6008DC76F /* AboutViewController.swift */,
 				3074A0C31DF7B3B6008DC76F /* AboutViewController.xib */,
 				3074A0C61DF7B3B6008DC76F /* ChangePasswordViewController.swift */,
@@ -459,11 +463,9 @@
 				3074A0CB1DF7B3B6008DC76F /* CheckAutographAndPictureViewController.xib */,
 				3074A0CD1DF7B3B6008DC76F /* CheckPathViewController.xib */,
 				3074A0CC1DF7B3B6008DC76F /* CheckPathViewController.swift */,
-				3074A0CE1DF7B3B6008DC76F /* LoginViewController.swift */,
 				302B0F061E02380E00AC2FEC /* PushOrderViewController.swift */,
 				3074A0D11DF7B3B6008DC76F /* MyUIStoryboardSegue.swift */,
 				3074A0D21DF7B3B6008DC76F /* NewsViewController.swift */,
-				3074A0D01DF7B3B6008DC76F /* MineViewController.swift */,
 				30FA7D1D1E820E6A00BB002D /* BillingViewController.swift */,
 				30FA7D1E1E820E6A00BB002D /* BillingViewController.xib */,
 				3074A0D71DF7B3B6008DC76F /* OrderViewController.swift */,
@@ -565,6 +567,7 @@
 			children = (
 				3074A1421DF7B62D008DC76F /* BusinessConstants.swift */,
 				3074A1431DF7B62D008DC76F /* URLConstants.swift */,
+				3043326B200F397800C31605 /* GlobalConstants.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -936,6 +939,7 @@
 				30BAFA9C1D2B634E00E769E8 /* Test.m in Sources */,
 				3074A1011DF7B3B6008DC76F /* OrderDetailViewController.swift in Sources */,
 				300FB29A1E836C56009E13F5 /* ShipmentAuditBiz.swift in Sources */,
+				3043326C200F397800C31605 /* GlobalConstants.swift in Sources */,
 				3074A1141DF7B3B6008DC76F /* PayedOrderTableViewCell.swift in Sources */,
 				3074A0F21DF7B3B6008DC76F /* ChangePasswordViewController.swift in Sources */,
 				3074A13D1DF7B417008DC76F /* OrderAutographAndPicture.swift in Sources */,

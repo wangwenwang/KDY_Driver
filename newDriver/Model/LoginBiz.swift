@@ -33,14 +33,18 @@ class LoginBiz {
      */
     func login (userName name: String, password pwd:String, httpresponseProtocol responseProtocol: HttpResponseProtocol) {
         let parameters = [
-            "strUserName": name,
-            "strPassword": pwd,
-            "strLicense": ""
+            "scene":"123456"
+//            "access_token":"16_WaLHtdqS2H-IF-LMVE3ihsZAKCrBJYGL4pyNEUCUkTqXM6M9Wr8S9GoYdrhaInG9_QKfVUUczKKkAF5r_59XrEzPSi2QO3eHZ7w-XT2adi4wlfHLtx2ksFfF0muzMeES1uihwKziIMmV27C5TQJhAGAFCV"
         ]
+        print(parameters)
+        
+        var url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=16_J8JNCBvUcr9X_a1L6MqkbkZglWrFKSyHHhrh7esHkWNNP4gHH1fbo8k5-a3cBJWA32LVcu0E_hwyz51E26BxyERCF-cxdjz4vMyiNs04Lb-een6R1HDR-CeYn8K8EFC0dDOO4TOEh-gggWcJCRFbAGANCQ";
+//        url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=ACCESS_TOKEN";
+        
         
         weak var weakSelf = self
         
-        NetWorkBaseBiz().postWithPath(path: URLConstants.loginUrl, paras: parameters, success: {(result) in
+        NetWorkBaseBiz().postWithPath(path: url, paras: parameters, success: {(result) in
             DispatchQueue.main.async {
                 print(result)
                 

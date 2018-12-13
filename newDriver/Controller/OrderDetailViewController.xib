@@ -439,7 +439,7 @@
                             <rect key="frame" x="210.5" y="0.0" width="93.5" height="30"/>
                             <color key="backgroundColor" red="0.95294117649999999" green="0.63921568630000003" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <state key="normal" title="展示二维码">
+                            <state key="normal" title="二维码">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <userDefinedRuntimeAttributes>
@@ -580,11 +580,6 @@
                 <constraint firstItem="Czn-6n-5iU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="zbF-B7-cEk"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <variation key="default">
-                <mask key="subviews">
-                    <exclude reference="0H7-Pn-OR5"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="1054" y="297.5"/>
         </view>
     </objects>

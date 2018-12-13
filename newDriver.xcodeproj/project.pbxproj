@@ -147,6 +147,7 @@
 		30E348431DFF9CE8002FF374 /* PushOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E348421DFF9CE8002FF374 /* PushOrder.swift */; };
 		30FA7D1F1E820E6A00BB002D /* BillingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FA7D1D1E820E6A00BB002D /* BillingViewController.swift */; };
 		30FA7D201E820E6A00BB002D /* BillingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30FA7D1E1E820E6A00BB002D /* BillingViewController.xib */; };
+		3B4054F921BE1E0F00982881 /* QRImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4054F821BE1E0F00982881 /* QRImageView.swift */; };
 		6B76F2D80CF5A4C8CFEAF4FD /* Pods_newDriver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37AC7EB65CEC4D408F971534 /* Pods_newDriver.framework */; };
 /* End PBXBuildFile section */
 
@@ -315,6 +316,7 @@
 		30FA7D1D1E820E6A00BB002D /* BillingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BillingViewController.swift; sourceTree = "<group>"; };
 		30FA7D1E1E820E6A00BB002D /* BillingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BillingViewController.xib; sourceTree = "<group>"; };
 		37AC7EB65CEC4D408F971534 /* Pods_newDriver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_newDriver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B4054F821BE1E0F00982881 /* QRImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRImageView.swift; sourceTree = "<group>"; };
 		E61724504B8B710C1189412E /* Pods-newDriver.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-newDriver.debug.xcconfig"; path = "Pods/Target Support Files/Pods-newDriver/Pods-newDriver.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -353,6 +355,7 @@
 				300472421DF7B921005A9ED5 /* AutographUIView.swift */,
 				300472431DF7B921005A9ED5 /* MyBMKMapView.swift */,
 				300472441DF7B921005A9ED5 /* RouteAnnotation.swift */,
+				3B4054F821BE1E0F00982881 /* QRImageView.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -934,6 +937,7 @@
 				302B0F0A1E02386500AC2FEC /* PushOrderTableViewCell.swift in Sources */,
 				30C4895A1F3BE53800EDB7CB /* GetShipmentUnPayOrderListBiz.swift in Sources */,
 				304DD5181D1E0D930073879C /* AppDelegate.swift in Sources */,
+				3B4054F921BE1E0F00982881 /* QRImageView.swift in Sources */,
 				3074A0FF1DF7B3B6008DC76F /* NotPayTableViewController.swift in Sources */,
 				300FB2A41E83CC39009E13F5 /* ShipmentPart.swift in Sources */,
 				30BAFA9C1D2B634E00E769E8 /* Test.m in Sources */,

@@ -8,6 +8,8 @@
 
 import UIKit
 import MapKit
+import Alamofire
+import SwiftyJSON
 
 
 /// 已交付状态
@@ -142,6 +144,12 @@ class OrderDetailViewController: UIViewController, HttpResponseProtocol, UITable
     
     /// 是否已经pop控制器，因为网络请求还在而不释放bug
     var isPopVC : Bool = false
+    
+    // 二维码背景
+    @IBOutlet weak var QRBgView: UIView!
+    
+    // 二维码
+    @IBOutlet weak var QRImageView1: UIButton!
     
     // MARK: - 生命周期
     override func viewDidLoad() {
@@ -546,6 +554,100 @@ class OrderDetailViewController: UIViewController, HttpResponseProtocol, UITable
         }
     }
     
+    @IBAction func ShowQR(_ sender: UIButton) {
+        
+        _ = MBProgressHUD.showHUDAddedTo(self.view.window!, animated: true)
+        Alamofire.request("http://oms.kaidongyuan.com:8088/api/wxGetWX_Voucher", method: .post, parameters: nil)
+            .responseJSON { response in
+                weak var weakSelf = self
+                switch response.result {
+                case .success:
+                    if let value = response.result.value {
+                        let json = JSON(value)
+                        print("JSON: \(json)")
+                        if let wkSelf = weakSelf {
+                            let type = json["type"].description
+                            if type == "1" {
+                                let array = json["result"]
+                                let dict = array[0]
+                                let access_token:String = dict["VOUCHER"].stringValue;
+                                let headers = [
+                                    "cache-control": "no-cache",
+                                    "Postman-Token": "d2d41128-9a86-444e-b039-07dd5d9ddf73"
+                                ]
+                                let qrWidth = 520
+                                let par = "{\"scene\":\"" + (wkSelf.biz.order?.ORD_NO)! + "\",\"width\":\"" + "\(qrWidth)" + "\"}"
+                                let postData = NSData(data: par.data(using: String.Encoding.utf8)!)
+                                let url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=" + access_token;
+                                let request = NSMutableURLRequest(url: NSURL(string: url)! as URL,
+                                                                  cachePolicy: .useProtocolCachePolicy,
+                                                                  timeoutInterval: 10.0)
+                                request.httpMethod = "POST"
+                                request.allHTTPHeaderFields = headers
+                                request.httpBody = postData as Data
+                                let session = URLSession.shared
+                                let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+                                    DispatchQueue.main.async {
+                                        _ = MBProgressHUD.hideHUDForView(self.view.window!, animated: true)
+                                    }
+                                    if (error != nil) {
+                                        print(error)
+                                    } else {
+                                        let httpResponse = response as? HTTPURLResponse
+                                        if let image: UIImage = UIImage(data: data as! Data) {
+                                            let imageView = UIButton.init()
+                                            imageView.setImage(image, for: .normal)
+                                            DispatchQueue.main.async {
+                                                
+                                                let view:UIView = UIView.init()
+                                                view.frame = CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGH)
+                                                view.backgroundColor = UIColor.black
+                                                view.alpha = 0.5
+                                                self.view.window?.addSubview(view)
+                                                self.QRBgView = view
+                                                
+                                                imageView.isUserInteractionEnabled = true
+                                                var width:CGFloat = CGFloat(qrWidth / 2)
+                                                var height:CGFloat = CGFloat(qrWidth / 2)
+                                                var x:CGFloat = (SCREEN_WIDTH - width) / 2
+                                                var y:CGFloat = (SCREEN_HEIGH - width) / 2
+                                                imageView.frame = CGRect.init(x: x, y: y, width: width, height: height)
+                                                self.view.window?.addSubview(imageView)
+                                                self.QRImageView1 = imageView
+                                                
+                                                let cancleBtn:UIButton = UIButton.init()
+                                                cancleBtn.setImage(UIImage.init(named: "lm_close"), for: .normal)
+                                                cancleBtn.addTarget(self, action: #selector(self.showQROnclickM(_:)), for: .touchUpInside)
+                                                width = 30
+                                                height = 30
+                                                imageView.imageEdgeInsets = UIEdgeInsetsMake(height / 2, 0, 0, width / 2);
+                                                x = imageView.frame.size.width - width
+                                                y = 0;
+                                                cancleBtn.frame = CGRect.init(x: x, y: y, width: width, height: height)
+                                                imageView.addSubview(cancleBtn)
+                                            }
+                                        }
+                                    }
+                                })
+                                dataTask.resume()
+                            } else {
+                                _ = MBProgressHUD.hideHUDForView(self.view.window!, animated: true)
+                                let msg = json["msg"].description
+                            }
+                        }
+                    }
+                case .failure(let error):
+                    _ = MBProgressHUD.hideHUDForView(self.view.window!, animated: true)
+                    print(error)
+                }
+        }
+    }
+    
+    func showQROnclickM(_:UIButton) {
+        
+        self.QRBgView.removeFromSuperview()
+        self.QRImageView1.removeFromSuperview()
+    }
     
     // MARK: - HttpResponseProtocol
     /// 获取订单详情成功返回数据
